@@ -66,7 +66,7 @@ internal class Tree
     //minLevels() - returns minimum number of levels possible given the internal node count of the tree
     public int minLevels()
     {
-        return (int) Math.Ceiling(Math.Log2(node_count + 1)) - 1;
+        return (int) Math.Ceiling(Math.Log2(node_count + 1));
     }
 
     //private methods--------------------------------------------------------------------------
