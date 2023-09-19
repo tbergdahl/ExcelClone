@@ -50,7 +50,7 @@ namespace Homework_2
             //------------------------------------------Algorithm 1--------------------------------------------------------
             HashSet<int> nums = new HashSet<int>();
 
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < ints.Count(); i++)
             {
                 nums.Add(ints[i]);//add every int to hash map
             }
@@ -65,7 +65,7 @@ namespace Homework_2
 
             //------------------------------------------Algorithm 2--------------------------------------------------------
             int distinct = 0;
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < ints.Count(); i++)
             {
                 bool isDistinct = true; // Assume the current element is distinct
 
@@ -94,10 +94,10 @@ namespace Homework_2
             //------------------------------------------Algorithm 3--------------------------------------------------------
             ints.Sort();
             int distinct2 = 0;
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < ints.Count(); i++)
             {
                 distinct2++; //distinct always increments
-                if (i < 9999 && ints[i] == ints[i + 1])
+                if (i < ints.Count() && ints[i] == ints[i - 1])
                 {
                     distinct2--; //if we've already used element, decrement
                 }

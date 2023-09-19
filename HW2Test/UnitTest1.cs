@@ -16,19 +16,19 @@ namespace Homework_2.Tests
                 ints.Add(i);
             }
             Form1 form = new Form1();
-            Assert.AreEqual(10000,form.RDI_Hash(ints));
+            Assert.AreEqual(10000, form.RDI_Hash(ints));
         }
         [Test]
         public void RDI_Hash_Test2()
         {//this method tests RDI_Hash() with duplicate values
             List<int> ints = new List<int>();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 1; i < 10000; i++)
             {
                 if (i % 2 == 0)
                     ints.Add(i - 1);
             }
             Form1 form = new Form1();
-            Assert.AreEqual(4999, form.RDI_Hash(ints));
+            Assert.AreEqual(5000, form.RDI_Hash(ints));
         }
 
         [Test]
@@ -47,13 +47,13 @@ namespace Homework_2.Tests
         public void RDI_None_Test2()
         {//this method tests RDI_None() with duplicate values
             List<int> ints = new List<int>();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 1; i < 10000; i++)
             {
                 if(i % 2 == 0)
                     ints.Add(i - 1);
             }
             Form1 form = new Form1();
-            Assert.AreEqual(4999, form.RDI_None(ints));
+            Assert.AreEqual(5000, form.RDI_None(ints));
         }
 
         [Test]
@@ -73,13 +73,13 @@ namespace Homework_2.Tests
         public void RDI_Sort_Test2()
         {//this method tests RDI_Sort() with duplicate values
             List<int> ints = new List<int>();
-            for (int i = 0; i < 10000; i++)
+            for (int i = 1; i < 10000; i++)
             {
                 if (i % 2 == 0)
                     ints.Add(i - 1);
             }
             Form1 form = new Form1();
-            Assert.AreEqual(4999, form.RDI_Sort(ints));
+            Assert.AreEqual(5000, form.RDI_Sort(ints));
         }
     }
 }
