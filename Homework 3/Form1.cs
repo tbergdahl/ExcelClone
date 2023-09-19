@@ -66,7 +66,26 @@ namespace Homework_3
         /// <param name="e"></param>
         private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //implement
+            if(openFileDialog1.ShowDialog() == DialogResult.OK) 
+            { 
+                string fileName = openFileDialog1.FileName;
+                if(File.Exists(fileName)) 
+                { 
+                    using(StreamReader sr = new StreamReader(fileName)) 
+                    {
+                        string line, full_message = "";
+                        while((line = sr.ReadLine()) != null)
+                        {
+                            full_message += line;
+                        }
+                        textBox1.Text = full_message;
+                    }
+                }
+                else
+                {
+                    textBox1.Text = "File not found" + fileName;
+                }
+            }
         }
 
 
