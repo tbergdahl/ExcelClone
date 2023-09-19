@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {
+    "net7.0-windows7.0": {
       "coverlet.collector/3.2.0": {
         "type": "package",
         "build": {
@@ -384,6 +384,19 @@
             "related": ".xml"
           }
         }
+      },
+      "Homework 3/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Homework 3.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Homework 3.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App.WindowsForms"
+        ]
       }
     }
   },
@@ -1004,10 +1017,16 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Homework 3/1.0.0": {
+      "type": "project",
+      "path": "../Homework 3/Homework 3.csproj",
+      "msbuildProject": "../Homework 3/Homework 3.csproj"
     }
   },
   "projectFileDependencyGroups": {
-    "net7.0": [
+    "net7.0-windows7.0": [
+      "Homework 3 >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 17.6.0",
       "NUnit >= 3.13.3",
       "NUnit.Analyzers >= 3.6.1",
@@ -1023,9 +1042,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Homework 4 Test.csproj",
-      "projectName": "Homework 4 Test",
-      "projectPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Homework 4 Test.csproj",
+      "projectUniqueName": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Homework 3 Test.csproj",
+      "projectName": "Homework 3 Test",
+      "projectPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Homework 3 Test.csproj",
       "packagesPath": "C:\\Users\\trent\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\obj\\",
       "projectStyle": "PackageReference",
@@ -1038,16 +1057,20 @@
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net7.0"
+        "net7.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "projectReferences": {}
+        "net7.0-windows7.0": {
+          "targetAlias": "net7.0-windows",
+          "projectReferences": {
+            "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 3\\Homework 3.csproj": {
+              "projectPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 3\\Homework 3.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -1057,8 +1080,8 @@
       }
     },
     "frameworks": {
-      "net7.0": {
-        "targetAlias": "net7.0",
+      "net7.0-windows7.0": {
+        "targetAlias": "net7.0-windows",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
             "target": "Package",
