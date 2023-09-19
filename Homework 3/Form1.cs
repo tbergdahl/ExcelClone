@@ -37,25 +37,59 @@ namespace Homework_3
 
         }
 
-
+        /// <summary>
+        /// Handles menu option "Load First 50 Fibonacci Numbers" being pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loadFirst50FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //implement
         }
 
+
+        /// <summary>
+        /// Handles menu option "Load First 100 Fibonacci Numbers" being pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loadFirst100FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //implement
         }
 
+
+        /// <summary>
+        /// Handles menu option "Load From File" being pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //implement
         }
 
+
+
+        /// <summary>
+        /// Handles menu option "Save to file" being pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveToFileToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             //implement
+        }
+
+
+        /// <summary>
+        /// Recursively computes the nth fibonacci number and returns it
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public int Fibonacci(int n)
+        {
+
         }
     }
 }
