@@ -82,14 +82,6 @@ namespace Homework_3
         }
 
 
-        /// <summary>
-        /// Recursively computes the nth fibonacci number and returns it
-        /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public int Fibonacci(int n)
-        {
-
-        }
+       
     }
 }
