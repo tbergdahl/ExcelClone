@@ -44,7 +44,15 @@ namespace Homework_3
         /// <param name="e"></param>
         private void loadFirst50FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //implement
+            FibonacciTextReader num = new FibonacciTextReader(50);
+            string line, textEntry = "";
+            int i = 0;
+            while ((line = num.ReadLine()) != null)
+            {
+                textEntry = textEntry + i++ + ": " + line +  Environment.NewLine;
+            }
+          
+            textBox1.Text = textEntry;
         }
 
 
@@ -55,7 +63,15 @@ namespace Homework_3
         /// <param name="e"></param>
         private void loadFirst100FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //implement
+            FibonacciTextReader num = new FibonacciTextReader(100);
+            string line, textEntry = "";
+            int i = 0;
+            while ((line = num.ReadLine()) != null)
+            {
+                textEntry = textEntry + i++ + ": " + line + Environment.NewLine;
+            }
+
+            textBox1.Text = textEntry;
         }
 
 
