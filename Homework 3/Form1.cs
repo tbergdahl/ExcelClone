@@ -89,12 +89,7 @@ namespace Homework_3
                 { 
                     using(StreamReader sr = new StreamReader(fileName)) 
                     {
-                        string line, full_message = "";
-                        while((line = sr.ReadLine()) != null)
-                        {
-                            full_message += line;
-                        }
-                        textBox1.Text = full_message;
+                       LoadText(sr);
                     }
                 }
                 else
