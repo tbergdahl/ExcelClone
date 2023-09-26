@@ -48,7 +48,7 @@
             textBox1.ScrollBars = ScrollBars.Both;
             textBox1.Size = new Size(800, 453);
             textBox1.TabIndex = 0;
-            textBox1.TextChanged += textBox1_TextChanged;
+            textBox1.TextChanged += TextBox1_TextChanged;
             // 
             // toolStripMenuItem1
             // 
@@ -56,35 +56,35 @@
             toolStripMenuItem1.Name = "toolStripMenuItem1";
             toolStripMenuItem1.Size = new Size(75, 24);
             toolStripMenuItem1.Text = "Options";
-            toolStripMenuItem1.Click += toolStripMenuItem1_Click;
+            toolStripMenuItem1.Click += ToolStripMenuItem1_Click;
             // 
             // loadFirst50FibonacciNumbersToolStripMenuItem
             // 
             loadFirst50FibonacciNumbersToolStripMenuItem.Name = "loadFirst50FibonacciNumbersToolStripMenuItem";
             loadFirst50FibonacciNumbersToolStripMenuItem.Size = new Size(315, 26);
             loadFirst50FibonacciNumbersToolStripMenuItem.Text = "Load First 50 Fibonacci Numbers";
-            loadFirst50FibonacciNumbersToolStripMenuItem.Click += loadFirst50FibonacciNumbersToolStripMenuItem_Click;
+            loadFirst50FibonacciNumbersToolStripMenuItem.Click += LoadFirst50FibonacciNumbersToolStripMenuItem_Click;
             // 
             // loadFirst100FibonacciNumbersToolStripMenuItem
             // 
             loadFirst100FibonacciNumbersToolStripMenuItem.Name = "loadFirst100FibonacciNumbersToolStripMenuItem";
             loadFirst100FibonacciNumbersToolStripMenuItem.Size = new Size(315, 26);
             loadFirst100FibonacciNumbersToolStripMenuItem.Text = "Load First 100 Fibonacci Numbers";
-            loadFirst100FibonacciNumbersToolStripMenuItem.Click += loadFirst100FibonacciNumbersToolStripMenuItem_Click;
+            loadFirst100FibonacciNumbersToolStripMenuItem.Click += LoadFirst100FibonacciNumbersToolStripMenuItem_Click;
             // 
             // loadFromFileToolStripMenuItem
             // 
             loadFromFileToolStripMenuItem.Name = "loadFromFileToolStripMenuItem";
             loadFromFileToolStripMenuItem.Size = new Size(315, 26);
             loadFromFileToolStripMenuItem.Text = "Load From File";
-            loadFromFileToolStripMenuItem.Click += loadFromFileToolStripMenuItem_Click;
+            loadFromFileToolStripMenuItem.Click += LoadFromFileToolStripMenuItem_Click;
             // 
             // saveToFileToolStripMenuItem1
             // 
             saveToFileToolStripMenuItem1.Name = "saveToFileToolStripMenuItem1";
             saveToFileToolStripMenuItem1.Size = new Size(315, 26);
             saveToFileToolStripMenuItem1.Text = "Save to File";
-            saveToFileToolStripMenuItem1.Click += saveToFileToolStripMenuItem1_Click;
+            saveToFileToolStripMenuItem1.Click += SaveToFileToolStripMenuItem1_Click;
             // 
             // Options
             // 
@@ -95,7 +95,7 @@
             Options.Size = new Size(800, 28);
             Options.TabIndex = 1;
             Options.Text = "menuStrip1";
-            Options.ItemClicked += menuStrip1_ItemClicked;
+            Options.ItemClicked += MenuStrip1_ItemClicked;
             // 
             // openFileDialog1
             // 

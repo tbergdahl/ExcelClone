@@ -7,12 +7,12 @@ namespace Homework_3
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void FileToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
@@ -27,12 +27,12 @@ namespace Homework_3
 
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }
@@ -42,10 +42,10 @@ namespace Homework_3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void loadFirst50FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadFirst50FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FibonacciTextReader num = new FibonacciTextReader(50);
-            string line, textEntry = "";
+            string? line, textEntry = "";
             int i = 0;
             while ((line = num.ReadLine()) != null)
             {
@@ -61,10 +61,10 @@ namespace Homework_3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void loadFirst100FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadFirst100FibonacciNumbersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FibonacciTextReader num = new FibonacciTextReader(100);
-            string line, textEntry = "";
+            string ?line, textEntry = "";
             int i = 0;
             while ((line = num.ReadLine()) != null)
             {
@@ -80,16 +80,16 @@ namespace Homework_3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void loadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(openFileDialog1.ShowDialog() == DialogResult.OK) 
             { 
                 string fileName = openFileDialog1.FileName;
                 if(File.Exists(fileName)) 
-                { 
+                {
                     using(StreamReader sr = new StreamReader(fileName)) 
-                    {
-                       LoadText(sr);
+                    { 
+                        LoadText(sr); 
                     }
                 }
                 else
@@ -106,7 +106,7 @@ namespace Homework_3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void saveToFileToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void SaveToFileToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if(saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -129,7 +129,7 @@ namespace Homework_3
        private void LoadText(TextReader sr)
        {
             
-            string line, text_box_contents = "";
+            string ?line, text_box_contents = "";
             while ((line = sr.ReadLine()) != null)
             {
                 text_box_contents += line;

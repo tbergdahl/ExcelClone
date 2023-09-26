@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "iGfgrf8nxiOaOKca+vuFCR/7QBBXbYtY06cj2TDeDftqbQJtn/v4V4/cNGmAciv8Vm7s2q+i2WThSSoBbQj/QQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Spreadsheet_Trenton_Bergdahl\\Spreadsheet_Trenton_Bergdahl.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\trent\\.nuget\\packages\\stylecop.analyzers\\1.1.118\\stylecop.analyzers.1.1.118.nupkg.sha512"
+  ],
+  "logs": []
+}
