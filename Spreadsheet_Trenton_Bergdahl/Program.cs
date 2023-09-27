@@ -4,6 +4,9 @@
 
 namespace Spreadsheet_Trenton_Bergdahl
 {
+    /// <summary>
+    /// Runs Program.
+    /// </summary>
     internal static class Program
     {
         /// <summary>

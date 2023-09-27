@@ -35,14 +35,12 @@ namespace Spreadsheet_Trenton_Bergdahl
 
             for (int i = 1; i <= 50; i++)
             {
-                dataGridView1.Rows.Add();
-                dataGridView1.Rows[i - 1].HeaderCell.Value = i.ToString();
+                this.dataGridView1.Rows.Add();
+                this.dataGridView1.Rows[i - 1].HeaderCell.Value = i.ToString();
             }
         }
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-              
-        }
+        {}
     }
 }
