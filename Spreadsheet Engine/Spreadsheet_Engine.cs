@@ -44,25 +44,52 @@ namespace Spreadsheet_Engine
         }
     
 
-    abstract class Spreadsheet
+    public class Spreadsheet
     {
+
+        /// <summary>
+        /// Class that Allows only Spreadsheet to make Cells.
+        /// </summary>
+        public class SpreadsheetCell : Cell
+        {
+            /// <summary>
+            /// Uses Cell constructor as SpreadsheetCell constructor
+            /// </summary>
+            /// <param name="rindex"></param>
+            /// <param name="cindex"></param>
+            public SpreadsheetCell(int rindex, int cindex) : base(rindex, cindex)
+            {
+
+            }
+        }     
         private int numRows, numCols;
-        private Cell[,] cells;
+
+        /// <summary>
+        /// cells contains all of the SpreadSheet cells.
+        /// </summary>
+        private SpreadsheetCell[,] cells;
+
+        /// <summary>
+        /// Spreadsheet constructor - Initializes cells array with new SpreadsheetCells
+        /// </summary>
+        /// <param name="nRows"></param>
+        /// <param name="nCols"></param>
         public Spreadsheet(int nRows, int nCols)
         {
-           
-
-            cells = new Cell[nRows, nCols];
+            cells = new SpreadsheetCell[nRows, nCols];
             for(int row = 0; row < nRows; row++)
             {
                 for(int col = 0; col < nCols; col++)
                 {
-                    cells[row, col] = new Cell();
+                    cells[row, col] = new SpreadsheetCell(row, col);
                 }
             }
         }
 
-
+        public SpreadsheetCell GetCell(int row, int col)
+        {
+            return cells[row, col];
+        }
 
     }
 

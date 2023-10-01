@@ -1,11 +1,4 @@
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\bin\Release\net7.0\Spreadsheet Engine.deps.json
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\bin\Release\net7.0\Spreadsheet Engine.dll
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\bin\Release\net7.0\Spreadsheet Engine.pdb
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\Spreadsheet Engine.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\Spreadsheet Engine.AssemblyInfoInputs.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\Spreadsheet Engine.AssemblyInfo.cs
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\Spreadsheet Engine.csproj.CoreCompileInputs.cache
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\Spreadsheet Engine.dll
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\refint\Spreadsheet Engine.dll
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\Spreadsheet Engine.pdb
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Release\net7.0\ref\Spreadsheet Engine.dll
