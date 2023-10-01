@@ -42,10 +42,31 @@ namespace Spreadsheet_Engine
                 get { return evaluated; }
             }
         }
-    
+
 
     public class Spreadsheet
     {
+        private int numRows, numCols;
+
+        /// <summary>
+        /// cells contains all of the SpreadSheet cells.
+        /// </summary>
+        private SpreadsheetCell[,] cells;
+
+        public event PropertyChangedEventHandler CellPropertyChanged = delegate { };
+
+
+
+        public int ColumnCount
+        {
+            get { return numCols; }
+        }
+
+        public int RowCount
+        {
+            get { return numRows; }
+        }
+
 
         /// <summary>
         /// Class that Allows only Spreadsheet to make Cells.
@@ -59,15 +80,10 @@ namespace Spreadsheet_Engine
             /// <param name="cindex"></param>
             public SpreadsheetCell(int rindex, int cindex) : base(rindex, cindex)
             {
-
+                
             }
         }     
-        private int numRows, numCols;
-
-        /// <summary>
-        /// cells contains all of the SpreadSheet cells.
-        /// </summary>
-        private SpreadsheetCell[,] cells;
+        
 
         /// <summary>
         /// Spreadsheet constructor - Initializes cells array with new SpreadsheetCells
@@ -85,7 +101,8 @@ namespace Spreadsheet_Engine
                 {
                     for (int col = 0; col < nCols; col++)
                     {
-                        cells[row, col] = new SpreadsheetCell(row, col);
+                        cells[row, col] = new SpreadsheetCell(row, col); //initialize cells
+                        cells[row, col].PropertyChanged += CellChanged; //subscribe to cells' property changed event
                     }
                 }
             }
@@ -95,6 +112,24 @@ namespace Spreadsheet_Engine
             }
         }
 
+        
+        /// <summary>
+        /// Broadcasts that a cell has changed.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CellChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CellPropertyChanged(sender, e);
+        }
+
+
+        /// <summary>
+        /// Returns the cell at the inputted index.
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
         public SpreadsheetCell GetCell(int row, int col)
         {
             if (row < numRows && col < numCols && row >= 0 && col >= 0)
@@ -103,7 +138,7 @@ namespace Spreadsheet_Engine
             }
             else
             {
-                throw new ArgumentOutOfRangeException("Invalid Index Input.\n");
+                return null;
             }
         }
 
