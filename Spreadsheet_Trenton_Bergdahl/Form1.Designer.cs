@@ -1,5 +1,7 @@
-﻿namespace Spreadsheet_Trenton_Bergdahl
+﻿
+namespace Spreadsheet_Trenton_Bergdahl
 {
+    using Spreadsheet_Engine;
     partial class Form1
     {
         /// <summary>
@@ -13,6 +15,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
+            sheet.CellPropertyChanged -= Spreadsheet_CellChanged;
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -83,12 +86,14 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
-        
+
         #endregion
 
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn A;
         private DataGridViewTextBoxColumn B;
         private DataGridViewTextBoxColumn D;
+        
     }
+    
 }

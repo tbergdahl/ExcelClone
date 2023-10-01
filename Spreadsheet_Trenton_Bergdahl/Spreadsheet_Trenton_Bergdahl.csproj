@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <Reference Include="Spreadsheet Engine">
-      <HintPath>..\Spreadsheet Engine\bin\Release\net7.0\Spreadsheet Engine.dll</HintPath>
+      <HintPath>..\Spreadsheet Engine\bin\Release\net7.0-windows\Spreadsheet Engine.dll</HintPath>
     </Reference>
   </ItemGroup>
 

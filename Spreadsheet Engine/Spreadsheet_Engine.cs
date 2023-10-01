@@ -7,7 +7,7 @@ namespace Spreadsheet_Engine
         public abstract class Cell : INotifyPropertyChanged
         {
             private int rowIndex, colIndex;
-            private string? text, evaluated;
+            protected string? text, evaluated;
             public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
             protected Cell(int rindex, int cindex)
@@ -37,7 +37,7 @@ namespace Spreadsheet_Engine
                     PropertyChanged(this, new PropertyChangedEventArgs(Text));
                 }
             }
-            protected string Value
+            public string Value
             {
                 get { return evaluated; }
             }
@@ -55,7 +55,7 @@ namespace Spreadsheet_Engine
 
         public event PropertyChangedEventHandler CellPropertyChanged = delegate { };
 
-
+        
 
         public int ColumnCount
         {
@@ -82,6 +82,12 @@ namespace Spreadsheet_Engine
             {
                 
             }
+
+            public string Value
+            {
+                get { return evaluated; }
+                set { evaluated = value; }
+            }
         }     
         
 
@@ -102,7 +108,7 @@ namespace Spreadsheet_Engine
                     for (int col = 0; col < nCols; col++)
                     {
                         cells[row, col] = new SpreadsheetCell(row, col); //initialize cells
-                        cells[row, col].PropertyChanged += CellChanged; //subscribe to cells' property changed event
+                        cells[row, col].PropertyChanged += Cell_PropertyChanged; //subscribe to cells' property changed event
                     }
                 }
             }
@@ -118,8 +124,24 @@ namespace Spreadsheet_Engine
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CellChanged(object sender, PropertyChangedEventArgs e)
+        private void Cell_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+           SpreadsheetCell cell = (SpreadsheetCell)sender;
+            if (cell != null)
+            {
+                if(cell.Text != cell.Value)// there is a change in text
+                {
+                    if(cell.Text.StartsWith('='))//we have a formula
+                    {
+                        cell.Value = this.GetCell((int)cell.Text[1], cell.Text[2] - 'A').Value;
+                        cell.Text = cell.Value;
+                    }
+                    else
+                    {
+                        cell.Value = cell.Text;
+                    }
+                }
+            }
             CellPropertyChanged(sender, e);
         }
 

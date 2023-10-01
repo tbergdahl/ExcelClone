@@ -4,6 +4,16 @@
     "net7.0-windows7.0": {
       "StyleCop.Analyzers/1.1.118": {
         "type": "package"
+      },
+      "Spreadsheet Engine/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Spreadsheet Engine.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Spreadsheet Engine.dll": {}
+        }
       }
     }
   },
@@ -32,10 +42,16 @@
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
+    },
+    "Spreadsheet Engine/1.0.0": {
+      "type": "project",
+      "path": "../Spreadsheet Engine/Spreadsheet Engine.csproj",
+      "msbuildProject": "../Spreadsheet Engine/Spreadsheet Engine.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
+      "Spreadsheet Engine >= 1.0.0",
       "StyleCop.Analyzers >= 1.1.118"
     ]
   },
@@ -70,7 +86,11 @@
       "frameworks": {
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Spreadsheet Engine\\Spreadsheet Engine.csproj": {
+              "projectPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Spreadsheet Engine\\Spreadsheet Engine.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

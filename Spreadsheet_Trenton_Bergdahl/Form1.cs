@@ -3,13 +3,17 @@
 // </copyright>
 namespace Spreadsheet_Trenton_Bergdahl
 {
+    using System.ComponentModel;
     using System.Numerics;
-
+    using Spreadsheet_Engine;
     /// <summary>
     /// Handles all Winforms Utility.
     /// </summary>
     public partial class Form1 : Form
     {
+        private Spreadsheet sheet;
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
         /// </summary>
@@ -18,8 +22,9 @@ namespace Spreadsheet_Trenton_Bergdahl
             this.InitializeComponent();
             this.dataGridView1.Columns.Clear();
             this.InitializeDataGrid();
+            sheet = new Spreadsheet(26, 50);
+            sheet.CellPropertyChanged += Spreadsheet_CellChanged;
         }
-
         /// <summary>
         /// Creates columns with names A - Z, and rows 1 - 50.
         /// </summary>
@@ -42,5 +47,13 @@ namespace Spreadsheet_Trenton_Bergdahl
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {}
+
+        private void Spreadsheet_CellChanged(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+
+
     }
 }

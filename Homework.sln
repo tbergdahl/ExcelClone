@@ -20,6 +20,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework 3 Tests", "Homework 3 Tests\Homework 3 Tests.csproj", "{CF55C3F4-0BB4-4D36-9A1F-E6059F5E6E1B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreadsheet_Trenton_Bergdahl", "Spreadsheet_Trenton_Bergdahl\Spreadsheet_Trenton_Bergdahl.csproj", "{BFF0B620-5523-4D34-B81A-4635CC620A22}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DBE81A08-CD32-4A50-9FC5-1E87FA0A1DEE} = {DBE81A08-CD32-4A50-9FC5-1E87FA0A1DEE}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreadsheet Engine", "Spreadsheet Engine\Spreadsheet Engine.csproj", "{DBE81A08-CD32-4A50-9FC5-1E87FA0A1DEE}"
 EndProject
