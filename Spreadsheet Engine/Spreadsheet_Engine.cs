@@ -76,19 +76,35 @@ namespace Spreadsheet_Engine
         /// <param name="nCols"></param>
         public Spreadsheet(int nRows, int nCols)
         {
-            cells = new SpreadsheetCell[nRows, nCols];
-            for(int row = 0; row < nRows; row++)
+            numRows = nRows;
+            numCols = nCols;
+            if (nRows > 0 && nCols > 0)
             {
-                for(int col = 0; col < nCols; col++)
+                cells = new SpreadsheetCell[nRows, nCols];
+                for (int row = 0; row < nRows; row++)
                 {
-                    cells[row, col] = new SpreadsheetCell(row, col);
+                    for (int col = 0; col < nCols; col++)
+                    {
+                        cells[row, col] = new SpreadsheetCell(row, col);
+                    }
                 }
+            }
+            else
+            {
+                throw new ArgumentException("Please Provide a Value Greater Than 0.\n");
             }
         }
 
         public SpreadsheetCell GetCell(int row, int col)
         {
-            return cells[row, col];
+            if (row < numRows && col < numCols && row >= 0 && col >= 0)
+            {
+                return cells[row, col];
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("Invalid Index Input.\n");
+            }
         }
 
     }
