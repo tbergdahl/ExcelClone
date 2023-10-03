@@ -14,3 +14,7 @@ C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdah
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Release\net7.0-windows\Spreadsheet_Trenton_Bergdahl.pdb
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Release\net7.0-windows\Spreadsheet_Trenton_Bergdahl.genruntimeconfig.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Release\net7.0-windows\ref\Spreadsheet_Trenton_Bergdahl.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Release\net7.0-windows\Spreadsheet_Trenton_Bergdahl.csproj.AssemblyReference.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Release\net7.0-windows\Spreadsheet Engine.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Release\net7.0-windows\Spreadsheet Engine.pdb
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Release\net7.0-windows\Spreadsheet_Trenton_Bergdahl.csproj.CopyComplete

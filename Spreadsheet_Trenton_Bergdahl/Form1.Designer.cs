@@ -2,12 +2,14 @@
 namespace Spreadsheet_Trenton_Bergdahl
 {
     using Spreadsheet_Engine;
+    using System.ComponentModel;
+
     partial class Form1
     {
         /// <summary>
         ///  Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -15,7 +17,7 @@ namespace Spreadsheet_Trenton_Bergdahl
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            sheet.CellPropertyChanged -= Spreadsheet_CellChanged;
+            sheet.CellPropertyChanged -= Spreadsheet_PropertyChanged;
             if (disposing && (components != null))
             {
                 components.Dispose();
@@ -35,7 +37,8 @@ namespace Spreadsheet_Trenton_Bergdahl
             A = new DataGridViewTextBoxColumn();
             B = new DataGridViewTextBoxColumn();
             D = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            button1 = new Button();
+            ((ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
@@ -46,13 +49,11 @@ namespace Spreadsheet_Trenton_Bergdahl
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { A, B, D });
             dataGridView1.Location = new Point(2, -1);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.RowHeadersWidth = 60;
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.Size = new Size(798, 451);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += DataGridView1_CellContentClick;
-            dataGridView1.RowHeadersVisible = true;
-            dataGridView1.RowHeadersWidth = 60;
             // 
             // A
             // 
@@ -75,15 +76,26 @@ namespace Spreadsheet_Trenton_Bergdahl
             D.Name = "D";
             D.Width = 125;
             // 
+            // button1
+            // 
+            button1.Location = new Point(23, 53);
+            button1.Name = "button1";
+            button1.Size = new Size(97, 47);
+            button1.TabIndex = 1;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(dataGridView1);
             Name = "Form1";
             Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -93,7 +105,7 @@ namespace Spreadsheet_Trenton_Bergdahl
         private DataGridViewTextBoxColumn A;
         private DataGridViewTextBoxColumn B;
         private DataGridViewTextBoxColumn D;
-        
+        private Button button1;
     }
-    
+
 }

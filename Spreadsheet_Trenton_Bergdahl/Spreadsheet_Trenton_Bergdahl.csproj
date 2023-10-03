@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Spreadsheet Engine\Spreadsheet Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Spreadsheet Engine">
       <HintPath>..\Spreadsheet Engine\bin\Release\net7.0-windows\Spreadsheet Engine.dll</HintPath>
     </Reference>

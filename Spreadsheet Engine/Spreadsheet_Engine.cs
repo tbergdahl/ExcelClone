@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Spreadsheet_Engine
 {
@@ -133,7 +134,7 @@ namespace Spreadsheet_Engine
                 {
                     if(cell.Text.StartsWith('='))//we have a formula
                     {
-                        cell.Value = this.GetCell((int)cell.Text[1], cell.Text[2] - 'A').Value;
+                        cell.Value = this.GetCell((int)cell.Text[2], cell.Text[1] - 'A').Value;
                         cell.Text = cell.Value;
                     }
                     else
@@ -142,7 +143,8 @@ namespace Spreadsheet_Engine
                     }
                 }
             }
-            CellPropertyChanged(sender, e);
+            string str = cell.RowIndex.ToString() + " " + cell.ColIndex.ToString();
+            CellPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(str));
         }
 
 
@@ -164,8 +166,25 @@ namespace Spreadsheet_Engine
             }
         }
 
-    }
 
+        public void Demo()
+        {
+            //cells[50, 26].Text = "YUP";
+
+
+            Random num = new Random();
+            int row, col;
+            string text = "yup";
+            for (int i = 0; i < 50; i++)// generate 50 random indeces
+            {
+                row = num.Next(1, 51);
+                col = num.Next(1, 27);
+                cells[row, col].Text = text;
+            }
+        }
+
+
+    }
 
 
 
