@@ -4,7 +4,7 @@ namespace Spreadsheet_Trenton_Bergdahl
     using Spreadsheet_Engine;
     using System.ComponentModel;
 
-    partial class Form1
+    partial class Form1 
     {
         /// <summary>
         ///  Required designer variable.
@@ -53,7 +53,6 @@ namespace Spreadsheet_Trenton_Bergdahl
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.Size = new Size(798, 451);
             dataGridView1.TabIndex = 0;
-            dataGridView1.CellContentClick += DataGridView1_CellContentClick;
             // 
             // A
             // 
@@ -84,7 +83,7 @@ namespace Spreadsheet_Trenton_Bergdahl
             button1.TabIndex = 1;
             button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            button1.Click += Button1_Click;
             // 
             // Form1
             // 

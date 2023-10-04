@@ -9,7 +9,7 @@ namespace Spreadsheet_Engine
         {
             private int rowIndex, colIndex;
             protected string? text, evaluated;
-            public event PropertyChangedEventHandler PropertyChanged = delegate { };
+            public event PropertyChangedEventHandler? PropertyChanged = delegate { };
 
             protected Cell(int rindex, int cindex)
             {
@@ -24,9 +24,9 @@ namespace Spreadsheet_Engine
             {
                 get { return rowIndex; }
             }
-            public string Text
+            public string? Text
             {
-                get { return text; }
+                get => text;
                 set
                 {
 
@@ -35,10 +35,13 @@ namespace Spreadsheet_Engine
                         return;
                     }
                     text = value;
-                    PropertyChanged(this, new PropertyChangedEventArgs(Text));
+                    if (PropertyChanged != null)
+                    {
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Text));
+                    }
                 }
             }
-            public string Value
+            public string? Value
             {
                 get { return evaluated; }
             }
@@ -47,6 +50,9 @@ namespace Spreadsheet_Engine
 
     public class Spreadsheet
     {
+        /// <summary>
+        /// private data members to specify the max number of rows and columns in the spreadsheet instance.
+        /// </summary>
         private int numRows, numCols;
 
         /// <summary>
@@ -54,9 +60,8 @@ namespace Spreadsheet_Engine
         /// </summary>
         private SpreadsheetCell[,] cells;
 
-        public event PropertyChangedEventHandler CellPropertyChanged = delegate { };
 
-        
+        public event PropertyChangedEventHandler CellPropertyChanged = delegate { };
 
         public int ColumnCount
         {
@@ -84,7 +89,7 @@ namespace Spreadsheet_Engine
                 
             }
 
-            public string Value
+            public new string? Value
             {
                 get { return evaluated; }
                 set { evaluated = value; }
@@ -121,30 +126,43 @@ namespace Spreadsheet_Engine
 
         
         /// <summary>
-        /// Broadcasts that a cell has changed.
+        /// Broadcasts that a cell has changed, and sends the coordinates of the triggering cell as a string.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Cell_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Cell_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-           SpreadsheetCell cell = (SpreadsheetCell)sender;
-            if (cell != null)
+            if (sender is SpreadsheetCell cell)
             {
-                if(cell.Text != cell.Value)// there is a change in text
+                if (cell.Text != cell.Value)// there is a change in text
                 {
-                    if(cell.Text.StartsWith('='))//we have a formula
+                    
+                    if (cell.Text?.StartsWith('=') == true)//we have a formula
                     {
-                        cell.Value = this.GetCell((int)cell.Text[2], cell.Text[1] - 'A').Value;
-                        cell.Text = cell.Value;
+                        if(cell.Text?.Length > 2 && int.TryParse(cell.Text.AsSpan(1), out int rowIndex))//verify proper index format held after '='
+                        {
+                            int colIndex = cell.Text[1] - 'A';
+                            var target = this.GetCell(rowIndex, colIndex);
+                            if(target != null)
+                            {
+                                cell.Value = target.Value;
+                                cell.Text = cell.Value;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
                     }
                     else
                     {
                         cell.Value = cell.Text;
                     }
                 }
+                string str = cell.RowIndex.ToString() + " " + cell.ColIndex.ToString();
+                CellPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(str));
             }
-            string str = cell.RowIndex.ToString() + " " + cell.ColIndex.ToString();
-            CellPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(str));
+            return;
         }
 
 
@@ -153,8 +171,8 @@ namespace Spreadsheet_Engine
         /// </summary>
         /// <param name="row"></param>
         /// <param name="col"></param>
-        /// <returns></returns>
-        public SpreadsheetCell GetCell(int row, int col)
+        /// <returns> cell </returns>
+        public SpreadsheetCell? GetCell(int row, int col)
         {
             if (row < numRows && col < numCols && row >= 0 && col >= 0)
             {
@@ -166,7 +184,9 @@ namespace Spreadsheet_Engine
             }
         }
 
-
+        /// <summary>
+        /// Performs HW4 demo.
+        /// </summary>
         public void Demo()
         {
             //cells[50, 26].Text = "YUP";
@@ -181,12 +201,12 @@ namespace Spreadsheet_Engine
                 col = num.Next(1, 27);
                 cells[row, col].Text = text;
             }
+
+            for(int i = 1; i < 51; i++)
+            {
+                cells[i, 2].Text = "This is cell B" + i + ".";
+                cells[i, 1].Text = cells[i, 2].Text; 
+            }
         }
-
-
     }
-
-
-
-
 }
