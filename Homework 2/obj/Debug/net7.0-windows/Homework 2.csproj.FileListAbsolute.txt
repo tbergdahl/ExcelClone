@@ -1,0 +1,16 @@
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\bin\Debug\net7.0-windows\Homework 2.exe
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\bin\Debug\net7.0-windows\Homework 2.deps.json
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\bin\Debug\net7.0-windows\Homework 2.runtimeconfig.json
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\bin\Debug\net7.0-windows\Homework 2.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\bin\Debug\net7.0-windows\Homework 2.pdb
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework_2.Form1.resources
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.csproj.GenerateResource.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.AssemblyInfoInputs.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.AssemblyInfo.cs
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.csproj.CoreCompileInputs.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\refint\Homework 2.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.pdb
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\Homework 2.genruntimeconfig.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 2\obj\Debug\net7.0-windows\ref\Homework 2.dll
