@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq.Expressions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Spreadsheet_Engine
@@ -208,5 +209,199 @@ namespace Spreadsheet_Engine
                 cells[i, 1].Text = cells[i, 2].Text; 
             }
         }
+    }
+
+
+    public abstract class Node
+    {
+
+    }
+
+
+
+    public class EvaluationTree
+    {
+
+        private Dictionary<string, double> variables;
+        Node root;
+
+
+        /// <summary>
+        /// Constructor that builds the tree based off input expression.
+        /// </summary>
+        /// <param name="expression"></param>
+        public EvaluationTree(string expression)
+        {
+            Stack<Node> stack = new Stack<Node>();// Using a stack to store the order of the nodes in the tree (first node is at bottom of tree)
+            string[] expressions = Parse(expression);
+            
+            foreach (string exp in expressions) 
+            {
+                if(exp.Length == 1)// operator or digit
+                {
+                    if (char.IsDigit(exp[0]))
+                    {
+                        stack.Push(new NumericNode(double.Parse(exp)));
+                    }
+                    else
+                    {
+                        OperatorNode op = new OperatorNode(exp);
+                        op.Left = stack.Pop();
+                        op.Right = stack.Pop(); //based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
+                                                //contain 3, 3. Thus we make +'s children 3.
+                        stack.Push(op); //if we have something like 3 + 3 * 8, makes 3 + 3 child of *
+                    }
+                }
+                else// variable
+                {
+                    stack.Push(new VariableNode(exp));
+                }
+            }
+
+            if(stack.Count == 1)
+            {
+                root = stack.Pop();
+            }
+            else
+            {
+                throw new Exception("Improper Expression Input.");
+            }
+
+        }
+
+        /// <summary>
+        /// Splits expression into subexpressions to build nodes
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        static public string[] Parse(string expression)
+        {
+            List<string> tokens = new List<string>();
+            string token = "";
+            for(int i = 0; i < expression.Length;  i++) 
+            {
+                if (expression[i] != ' ')
+                {
+                    if (char.IsDigit(expression[i]))
+                    {
+                        tokens.Add(expression[i].ToString());
+                    }
+                    else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/')
+                    {
+                        tokens.Add(expression[i].ToString());
+                    }
+                    else// variable name?
+                    {
+                        while(i < expression.Length && char.IsLetterOrDigit(expression[i]))
+                        {
+                            token += expression[i];
+                            i++;
+                        }
+                        --i; //don't skip character
+                        tokens.Add(token);
+                        token = "";
+                    }
+
+                }
+            
+            }
+
+            // we have everything parsed, now need to put it in order (operand1), (operand2), operator
+
+            for(int i = 2; i < tokens.Count; i += 2) // need to turn 3 + 3 into 3 3 +
+            {
+                string temp = tokens[i];
+                tokens[i] = tokens[i - 1];
+                tokens[i - 1] = temp;
+            }
+
+
+
+            return tokens.ToArray();
+        }
+
+
+
+        /// <summary>
+        /// Updates dictionary to store a variable.
+        /// </summary>
+        /// <param name="variableName"></param>
+        /// <param name="variableValue"></param>
+        public void SetVariable(string variableName, double variableValue)
+        {
+            variables[variableName] = variableValue;
+        }
+
+        /// <summary>
+        /// Evaluates expression stored in tree.
+        /// </summary>
+        /// <returns></returns>
+
+        public double Evaluate()
+        {
+            return 0.0;
+        }
+
+
+
+
+
+
+
+        private class NumericNode : Node
+        {
+            double constant;
+            public NumericNode(double nConstant)
+            {
+                constant = nConstant;
+            }
+
+
+            public double Constant
+            {
+                get { return constant; }
+                set { constant = value; }
+            }
+
+        }
+
+        private class VariableNode : Node
+        {
+            string varName;
+
+            public VariableNode(string newVarName)
+            {
+                this.varName = newVarName;
+            }
+
+            public string VarName
+            {
+                get { return varName; }
+            }
+        }
+
+        private class OperatorNode : Node
+        {
+            string operationType;
+            Node left, right;
+
+            public OperatorNode(string newOperationType)
+            {
+                operationType = newOperationType;
+            }
+
+            public Node Left
+            {
+                get { return left; }
+                set { left = value; }
+            }
+
+            public Node Right
+            {
+                get { return right; }
+                set { right = value; }
+            }
+        }
+
     }
 }
