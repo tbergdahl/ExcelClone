@@ -12,6 +12,7 @@
           "NUnit": "3.13.3",
           "NUnit.Analyzers": "3.6.1",
           "NUnit3TestAdapter": "4.4.2",
+          "StyleCop.Analyzers": "1.1.118",
           "coverlet.collector": "3.2.0",
           "Spreadsheet Engine.Reference": "1.0.0.0"
         },
@@ -316,6 +317,7 @@
       },
       "NUnit.Analyzers/3.6.1": {},
       "NUnit3TestAdapter/4.4.2": {},
+      "StyleCop.Analyzers/1.1.118": {},
       "System.Reflection.Metadata/1.6.0": {},
       "Spreadsheet Engine.Reference/1.0.0.0": {
         "runtime": {
@@ -416,6 +418,13 @@
       "sha512": "sha512-vA/iHYcR+LYw+pRWQugckC/zW2fXHaqMr2uA82NOBt8v4YK4wMJrQ7QC8XLc7PjetEZ96cPbBTWsDDtmQiRZTA==",
       "path": "nunit3testadapter/4.4.2",
       "hashPath": "nunit3testadapter.4.4.2.nupkg.sha512"
+    },
+    "StyleCop.Analyzers/1.1.118": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Onx6ovGSqXSK07n/0eM3ZusiNdB6cIlJdabQhWGgJp3Vooy9AaLS/tigeybOJAobqbtggTamoWndz72JscZBvw==",
+      "path": "stylecop.analyzers/1.1.118",
+      "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
     },
     "System.Reflection.Metadata/1.6.0": {
       "type": "package",

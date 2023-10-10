@@ -232,6 +232,8 @@ namespace Spreadsheet_Engine
         /// <param name="expression"></param>
         public EvaluationTree(string expression)
         {
+            variables = new Dictionary<string, double>();// initialize variables dictionary
+
             Stack<Node> stack = new Stack<Node>();// Using a stack to store the order of the nodes in the tree (first node is at bottom of tree)
             string[] expressions = Parse(expression);
             
@@ -246,10 +248,10 @@ namespace Spreadsheet_Engine
                     else
                     {
                         OperatorNode op = new OperatorNode(exp);
-                        op.Left = stack.Pop();
-                        op.Right = stack.Pop(); //based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
-                                                //contain 3, 3. Thus we make +'s children 3.
-                        stack.Push(op); //if we have something like 3 + 3 * 8, makes 3 + 3 child of *
+                        op.Right = stack.Pop();
+                        op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
+                                                // contain 3, 3. Thus we make +'s children 3.
+                        stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
                     }
                 }
                 else// variable
@@ -290,7 +292,7 @@ namespace Spreadsheet_Engine
                     {
                         tokens.Add(expression[i].ToString());
                     }
-                    else// variable name?
+                    else if(char.IsLetterOrDigit(expression[i]))// variable name
                     {
                         while(i < expression.Length && char.IsLetterOrDigit(expression[i]))
                         {
@@ -300,6 +302,10 @@ namespace Spreadsheet_Engine
                         --i; //don't skip character
                         tokens.Add(token);
                         token = "";
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Invalid Operator.");
                     }
 
                 }
@@ -314,9 +320,6 @@ namespace Spreadsheet_Engine
                 tokens[i] = tokens[i - 1];
                 tokens[i - 1] = temp;
             }
-
-
-
             return tokens.ToArray();
         }
 
@@ -339,10 +342,66 @@ namespace Spreadsheet_Engine
 
         public double Evaluate()
         {
-            return 0.0;
+           return Evaluate(root);
         }
 
+        /// <summary>
+        /// Helper function for public Evaluate that recursively calculates expression inside tree.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        /// <exception cref="DivideByZeroException"></exception>
+        /// <exception cref="Exception"></exception>
+        private double Evaluate(Node node)
+        {
+            if(node == null)
+            {
+                return 0;
+            }
 
+            if(node is OperatorNode)
+            {
+               OperatorNode n = (OperatorNode)node;
+               double left = this.Evaluate(n.Left);
+               double right = this.Evaluate(n.Right);
+
+                switch(n.operationType) 
+                {
+                    case "+": return left + right;
+                        
+                    case "-": return left - right;
+                        
+                    case "*": return left * right;
+                        
+                    case "/":
+                        if (right == 0)
+                        {
+                            throw new DivideByZeroException("Error: Dividing By Zero.");
+                        }
+                        return left / right;
+                    default: throw new InvalidOperationException("Invalid Operator.");
+                }
+
+            }
+            else if(node is NumericNode)
+            {
+                NumericNode n = (NumericNode)node;
+                return n.Constant;
+            }
+            else if(node is VariableNode)
+            {
+                VariableNode n = (VariableNode)node;
+                if(variables.TryGetValue(n.VarName, out var value))// if value exists
+                {
+                    return value;
+                }
+                else
+                {
+                    throw new Exception("Variable Does Not Exist.");
+                }
+            }
+            return 0.0;
+        }
 
 
 
@@ -382,21 +441,21 @@ namespace Spreadsheet_Engine
 
         private class OperatorNode : Node
         {
-            string operationType;
-            Node left, right;
+            public string operationType;
+            Node? left, right;
 
             public OperatorNode(string newOperationType)
             {
                 operationType = newOperationType;
             }
 
-            public Node Left
+            public Node? Left
             {
                 get { return left; }
                 set { left = value; }
             }
 
-            public Node Right
+            public Node? Right
             {
                 get { return right; }
                 set { right = value; }
