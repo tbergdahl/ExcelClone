@@ -239,20 +239,18 @@ namespace Spreadsheet_Engine
             
             foreach (string exp in expressions) 
             {
-                if(exp.Length == 1)// operator or digit
+                
+                if (char.IsDigit(exp[0]))
                 {
-                    if (char.IsDigit(exp[0]))
-                    {
-                        stack.Push(new NumericNode(double.Parse(exp)));
-                    }
-                    else
-                    {
-                        OperatorNode op = new OperatorNode(exp);
-                        op.Right = stack.Pop();
-                        op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
-                                                // contain 3, 3. Thus we make +'s children 3.
-                        stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
-                    }
+                    stack.Push(new NumericNode(double.Parse(exp)));
+                }
+                else if (exp[0]=='+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
+                {
+                    OperatorNode op = new OperatorNode(exp);
+                    op.Right = stack.Pop();
+                    op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
+                                            // contain 3, 3. Thus we make +'s children 3.
+                    stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
                 }
                 else// variable
                 {
@@ -286,7 +284,17 @@ namespace Spreadsheet_Engine
                 {
                     if (char.IsDigit(expression[i]))
                     {
-                        tokens.Add(expression[i].ToString());
+                        if (char.IsDigit(expression[i]) || expression[i] == '.')
+                        {
+                            while (i < expression.Length && (char.IsDigit(expression[i]) || expression[i] == '.'))
+                            {
+                                token += expression[i];
+                                i++;
+                            }
+                            --i; // don't skip character
+                            tokens.Add(token);
+                            token = "";
+                        }
                     }
                     else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/')
                     {
@@ -302,6 +310,10 @@ namespace Spreadsheet_Engine
                         --i; //don't skip character
                         tokens.Add(token);
                         token = "";
+                    }
+                    else if (expression[i] == '.')
+                    {
+                        
                     }
                     else
                     {
