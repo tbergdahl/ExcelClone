@@ -223,7 +223,7 @@ namespace Spreadsheet_Engine
     {
 
         private Dictionary<string, double> variables;
-        Node root;
+        readonly Node root;
 
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Spreadsheet_Engine
                 {
                     stack.Push(new NumericNode(double.Parse(exp)));
                 }
-                else if (exp[0]=='+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
+                else if (exp[0] =='+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
                 {
                     OperatorNode op = new OperatorNode(exp);
                     op.Right = stack.Pop();
@@ -278,11 +278,11 @@ namespace Spreadsheet_Engine
         {
             List<string> tokens = new List<string>();
             string token = "";
-            for(int i = 0; i < expression.Length;  i++) 
+            if (expression != null)
             {
-                if (expression[i] != ' ')
+                for (int i = 0; i < expression.Length; i++)
                 {
-                    if (char.IsDigit(expression[i]))
+                    if (expression[i] != ' ')
                     {
                         if (char.IsDigit(expression[i]) || expression[i] == '.')
                         {
@@ -295,42 +295,41 @@ namespace Spreadsheet_Engine
                             tokens.Add(token);
                             token = "";
                         }
-                    }
-                    else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/')
-                    {
-                        tokens.Add(expression[i].ToString());
-                    }
-                    else if(char.IsLetterOrDigit(expression[i]))// variable name
-                    {
-                        while(i < expression.Length && char.IsLetterOrDigit(expression[i]))
+
+                        else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/')
                         {
-                            token += expression[i];
-                            i++;
+                            tokens.Add(expression[i].ToString());
                         }
-                        --i; //don't skip character
-                        tokens.Add(token);
-                        token = "";
-                    }
-                    else if (expression[i] == '.')
-                    {
-                        
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Invalid Operator.");
+                        else if (char.IsLetterOrDigit(expression[i]))// variable name
+                        {
+                            while (i < expression.Length && char.IsLetterOrDigit(expression[i]))
+                            {
+                                token += expression[i];
+                                i++;
+                            }
+                            --i; //don't skip character
+                            tokens.Add(token);
+                            token = "";
+                        }
+                        else if (expression[i] == '.')
+                        {
+
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Invalid Operator.");
+                        }
+
                     }
 
                 }
-            
             }
 
             // we have everything parsed, now need to put it in order (operand1), (operand2), operator
 
             for(int i = 2; i < tokens.Count; i += 2) // need to turn 3 + 3 into 3 3 +
             {
-                string temp = tokens[i];
-                tokens[i] = tokens[i - 1];
-                tokens[i - 1] = temp;
+                (tokens[i], tokens[i - 1]) = (tokens[i - 1], tokens[i]);
             }
             return tokens.ToArray();
         }
@@ -371,20 +370,26 @@ namespace Spreadsheet_Engine
                 return 0;
             }
 
-            if(node is OperatorNode)
+            if(node is OperatorNode n)
             {
-               OperatorNode n = (OperatorNode)node;
-               double left = this.Evaluate(n.Left);
-               double right = this.Evaluate(n.Right);
-
-                switch(n.operationType) 
+                double left = 0;
+                double right = 0;
+              
+                if (n.Left != null && n.Right != null)
+                {
+                    left = this.Evaluate(n.Left);
+                    right = this.Evaluate(n.Right);
+                }
+                
+                
+                switch (n.operationType)
                 {
                     case "+": return left + right;
-                        
+
                     case "-": return left - right;
-                        
+
                     case "*": return left * right;
-                        
+
                     case "/":
                         if (right == 0)
                         {
@@ -393,17 +398,18 @@ namespace Spreadsheet_Engine
                         return left / right;
                     default: throw new InvalidOperationException("Invalid Operator.");
                 }
+                
 
             }
-            else if(node is NumericNode)
+            else if(node is NumericNode num)
             {
-                NumericNode n = (NumericNode)node;
-                return n.Constant;
+                
+                return num.Constant;
             }
             else if(node is VariableNode)
             {
-                VariableNode n = (VariableNode)node;
-                if(variables.TryGetValue(n.VarName, out var value))// if value exists
+                VariableNode var = (VariableNode)node; 
+                if (variables.TryGetValue(var.VarName, out var value))// if value exists
                 {
                     return value;
                 }
@@ -438,7 +444,7 @@ namespace Spreadsheet_Engine
 
         private class VariableNode : Node
         {
-            string varName;
+            readonly string varName;
 
             public VariableNode(string newVarName)
             {

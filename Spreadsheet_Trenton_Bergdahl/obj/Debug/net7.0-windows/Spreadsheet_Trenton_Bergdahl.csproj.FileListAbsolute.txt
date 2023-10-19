@@ -3,12 +3,16 @@ C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdah
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.runtimeconfig.json
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.pdb
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Debug\net7.0-windows\Spreadsheet Engine.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\bin\Debug\net7.0-windows\Spreadsheet Engine.pdb
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.csproj.AssemblyReference.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.Form1.resources
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.csproj.GenerateResource.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.AssemblyInfoInputs.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.AssemblyInfo.cs
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.csproj.CoreCompileInputs.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.csproj.CopyComplete
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\refint\Spreadsheet_Trenton_Bergdahl.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet_Trenton_Bergdahl\obj\Debug\net7.0-windows\Spreadsheet_Trenton_Bergdahl.pdb

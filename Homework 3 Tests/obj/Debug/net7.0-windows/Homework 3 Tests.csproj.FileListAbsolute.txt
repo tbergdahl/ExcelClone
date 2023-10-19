@@ -1,9 +1,4 @@
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\CoverletSourceRootsMapping
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.csproj.AssemblyReference.cache
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.AssemblyInfoInputs.cache
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.AssemblyInfo.cs
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.csproj.CoreCompileInputs.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\testhost.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\Homework 3.deps.json
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\Homework 3.runtimeconfig.json
@@ -98,6 +93,11 @@ C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\Homework 3.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\bin\Debug\net7.0-windows\Homework 3.pdb
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.csproj.AssemblyReference.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.AssemblyInfoInputs.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.AssemblyInfo.cs
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.csproj.CoreCompileInputs.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.csproj.CopyComplete
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\Homework 3 Tests.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 3 Tests\obj\Debug\net7.0-windows\refint\Homework 3 Tests.dll
