@@ -8,3 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:Spreadsheet_Engine.Cell.rowIndex")]
 [assembly: SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:Spreadsheet_Engine.Spreadsheet.numRows")]
 [assembly: SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:Spreadsheet_Engine.Spreadsheet.cells")]
+[assembly: SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:Spreadsheet_Engine.EvaluationTree.variables")]
+[assembly: SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Spreadsheet_Engine.EvaluationTree.#ctor(System.String)")]
+[assembly: SuppressMessage("Style", "IDE0020:Use pattern matching", Justification = "<Pending>", Scope = "member", Target = "~M:Spreadsheet_Engine.EvaluationTree.Evaluate(Spreadsheet_Engine.Node)~System.Double")]
