@@ -8,20 +8,16 @@
     ".NETCoreApp,Version=v7.0": {
       "Spreadsheet_Trenton_Bergdahl/1.0.0": {
         "dependencies": {
-          "StyleCop.Analyzers": "1.1.118",
-          "Spreadsheet Engine.Reference": "1.0.0.0"
+          "StyleCop.Analyzers": "1.1.118"
         },
         "runtime": {
           "Spreadsheet_Trenton_Bergdahl.dll": {}
         }
       },
       "StyleCop.Analyzers/1.1.118": {},
-      "Spreadsheet Engine.Reference/1.0.0.0": {
+      "Spreadsheet Engine/1.0.0": {
         "runtime": {
-          "Spreadsheet Engine.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Spreadsheet Engine.dll": {}
         }
       }
     }
@@ -39,8 +35,8 @@
       "path": "stylecop.analyzers/1.1.118",
       "hashPath": "stylecop.analyzers.1.1.118.nupkg.sha512"
     },
-    "Spreadsheet Engine.Reference/1.0.0.0": {
-      "type": "reference",
+    "Spreadsheet Engine/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

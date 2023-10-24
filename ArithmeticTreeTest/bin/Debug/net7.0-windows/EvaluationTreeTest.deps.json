@@ -13,8 +13,7 @@
           "NUnit.Analyzers": "3.6.1",
           "NUnit3TestAdapter": "4.4.2",
           "StyleCop.Analyzers": "1.1.118",
-          "coverlet.collector": "3.2.0",
-          "Spreadsheet Engine.Reference": "1.0.0.0"
+          "coverlet.collector": "3.2.0"
         },
         "runtime": {
           "EvaluationTreeTest.dll": {}
@@ -319,12 +318,9 @@
       "NUnit3TestAdapter/4.4.2": {},
       "StyleCop.Analyzers/1.1.118": {},
       "System.Reflection.Metadata/1.6.0": {},
-      "Spreadsheet Engine.Reference/1.0.0.0": {
+      "Spreadsheet Engine/1.0.0": {
         "runtime": {
-          "Spreadsheet Engine.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Spreadsheet Engine.dll": {}
         }
       }
     }
@@ -433,8 +429,8 @@
       "path": "system.reflection.metadata/1.6.0",
       "hashPath": "system.reflection.metadata.1.6.0.nupkg.sha512"
     },
-    "Spreadsheet Engine.Reference/1.0.0.0": {
-      "type": "reference",
+    "Spreadsheet Engine/1.0.0": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

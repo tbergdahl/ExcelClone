@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
+using System.Data;
 using System.Linq.Expressions;
 using static System.Net.Mime.MediaTypeNames;
 
+
+
 namespace Spreadsheet_Engine
 {
-
+    using OperatorNodeStuff;
 
         public abstract class Cell : INotifyPropertyChanged
         {
@@ -212,10 +215,7 @@ namespace Spreadsheet_Engine
     }
 
 
-    public abstract class Node
-    {
-
-    }
+    
 
 
 
@@ -236,6 +236,7 @@ namespace Spreadsheet_Engine
 
             Stack<Node> stack = new Stack<Node>();// Using a stack to store the order of the nodes in the tree (first node is at bottom of tree)
             string[] expressions = Parse(expression);
+            Stack<Node> operators = new Stack<Node>();
             
             foreach (string exp in expressions) 
             {
@@ -244,17 +245,18 @@ namespace Spreadsheet_Engine
                 {
                     stack.Push(new NumericNode(double.Parse(exp)));
                 }
-                else if (exp[0] =='+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
+                else if (exp[0] == '+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
                 {
-                    OperatorNode op = new OperatorNode(exp);
+                    OperatorNode? op = OperatorNodeFactory.Create(exp[0]);
                     op.Right = stack.Pop();
                     op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
                                             // contain 3, 3. Thus we make +'s children 3.
                     stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
                 }
-                else// variable
+                else // variable
                 {
-                    stack.Push(new VariableNode(exp));
+                    stack.Push(new VariableNode(exp, variables));
+                    variables[exp] = 0;
                 }
             }
 
@@ -295,7 +297,6 @@ namespace Spreadsheet_Engine
                             tokens.Add(token);
                             token = "";
                         }
-
                         else if (expression[i] == '+' || expression[i] == '-' || expression[i] == '*' || expression[i] == '/')
                         {
                             tokens.Add(expression[i].ToString());
@@ -311,9 +312,9 @@ namespace Spreadsheet_Engine
                             tokens.Add(token);
                             token = "";
                         }
-                        else if (expression[i] == '.')
+                        else if (expression[i] == '(' || expression[i] == ')')
                         {
-
+                            tokens.Add(expression[i].ToString());
                         }
                         else
                         {
@@ -325,15 +326,60 @@ namespace Spreadsheet_Engine
                 }
             }
 
-            // we have everything parsed, now need to put it in order (operand1), (operand2), operator
 
-            for(int i = 2; i < tokens.Count; i += 2) // need to turn 3 + 3 into 3 3 +
-            {
-                (tokens[i], tokens[i - 1]) = (tokens[i - 1], tokens[i]);
-            }
-            return tokens.ToArray();
+            return ToPostfix(tokens);
         }
 
+
+        /// <summary>
+        /// Uses Shunting Yard Algorithm to convert expression to postfix notation.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private static string[] ToPostfix(List<string> input)
+        {
+            Stack<string> operators = new Stack<string>();
+            Queue<string> output = new Queue<string>();
+
+            
+
+            foreach (string token in input)
+            {
+                if (char.IsDigit(token[0]) || char.IsLetter(token[0]))
+                {
+                    output.Enqueue(token);
+                }
+                else if (token[0] == '(')
+                {
+                    operators.Push(token);
+                }
+                else if (token[0] == ')')
+                {
+                    while(operators.Count > 0 && operators.Peek()[0] != '(')
+                    {
+                        output.Enqueue(operators.Pop());
+                    }
+                    operators.Pop();
+                }
+                else if (OperatorNodeFactory.Precedence(token[0]) != 0)
+                {
+                    while(operators.Count > 0 && operators.Peek()[0] != '(' && OperatorNodeFactory.Precedence(token[0]) <= OperatorNodeFactory.Precedence(operators.Peek()[0]))
+                    {
+                        output.Enqueue(operators.Pop());
+                    }
+                    operators.Push(token);
+                }
+            }
+
+
+            while(operators.Count > 0)
+            {
+                output.Enqueue(operators.Pop());
+            }
+
+            return output.ToArray();
+        }
+        
 
 
         /// <summary>
@@ -365,120 +411,11 @@ namespace Spreadsheet_Engine
         /// <exception cref="Exception"></exception>
         private double Evaluate(Node node)
         {
-            if(node == null)
+           if(node != null)
             {
-                return 0;
+                return node.Evaluate();
             }
-
-            if(node is OperatorNode n)
-            {
-                double left = 0;
-                double right = 0;
-              
-                if (n.Left != null && n.Right != null)
-                {
-                    left = this.Evaluate(n.Left);
-                    right = this.Evaluate(n.Right);
-                }
-                
-                
-                switch (n.operationType)
-                {
-                    case "+": return left + right;
-
-                    case "-": return left - right;
-
-                    case "*": return left * right;
-
-                    case "/":
-                        if (right == 0)
-                        {
-                            throw new DivideByZeroException("Error: Dividing By Zero.");
-                        }
-                        return left / right;
-                    default: throw new InvalidOperationException("Invalid Operator.");
-                }
-                
-
-            }
-            else if(node is NumericNode num)
-            {
-                
-                return num.Constant;
-            }
-            else if(node is VariableNode)
-            {
-                VariableNode var = (VariableNode)node; 
-                if (variables.TryGetValue(var.VarName, out var value))// if value exists
-                {
-                    return value;
-                }
-                else
-                {
-                    throw new Exception("Variable Does Not Exist.");
-                }
-            }
-            return 0.0;
+            else { return -1; }
         }
-
-
-
-
-
-        private class NumericNode : Node
-        {
-            double constant;
-            public NumericNode(double nConstant)
-            {
-                constant = nConstant;
-            }
-
-
-            public double Constant
-            {
-                get { return constant; }
-                set { constant = value; }
-            }
-
-        }
-
-        private class VariableNode : Node
-        {
-            readonly string varName;
-
-            public VariableNode(string newVarName)
-            {
-                this.varName = newVarName;
-            }
-
-            public string VarName
-            {
-                get { return varName; }
-            }
-        }
-
-        private class OperatorNode : Node
-        {
-            public string operationType;
-            Node? left, right;
-
-            public OperatorNode(string newOperationType)
-            {
-                operationType = newOperationType;
-            }
-
-            public Node? Left
-            {
-                get { return left; }
-                set { left = value; }
-            }
-
-            public Node? Right
-            {
-                get { return right; }
-                set { right = value; }
-            }
-        }
-
     }
 }
