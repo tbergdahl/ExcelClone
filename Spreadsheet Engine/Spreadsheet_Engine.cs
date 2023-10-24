@@ -9,6 +9,10 @@ namespace Spreadsheet_Engine
 {
     using OperatorNodeStuff;
 
+
+        /// <summary>
+        /// Cell class that abstracts a cell.
+        /// </summary>
         public abstract class Cell : INotifyPropertyChanged
         {
             private int rowIndex, colIndex;
@@ -327,7 +331,7 @@ namespace Spreadsheet_Engine
             }
 
 
-            return ToPostfix(tokens);
+             return ToPostfix(tokens);
         }
 
 

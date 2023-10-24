@@ -93,7 +93,9 @@ namespace EvaluationTreeTest
             CollectionAssert.AreEqual(expected, actual);
         }
 
-
+        /// <summary>
+        /// Tests evaluate on a more complicated input.
+        /// </summary>
         [Test]
         public void TestEvaluate_ComplicatedInput()
         {
