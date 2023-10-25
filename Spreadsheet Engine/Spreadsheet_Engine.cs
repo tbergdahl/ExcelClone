@@ -240,7 +240,6 @@ namespace Spreadsheet_Engine
 
             Stack<Node> stack = new Stack<Node>();// Using a stack to store the order of the nodes in the tree (first node is at bottom of tree)
             string[] expressions = Parse(expression);
-            Stack<Node> operators = new Stack<Node>();
             
             foreach (string exp in expressions) 
             {
@@ -252,10 +251,13 @@ namespace Spreadsheet_Engine
                 else if (exp[0] == '+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
                 {
                     OperatorNode? op = OperatorNodeFactory.Create(exp[0]);
-                    op.Right = stack.Pop();
-                    op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
-                                            // contain 3, 3. Thus we make +'s children 3.
-                    stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
+                    if (op != null)
+                    {
+                        op.Right = stack.Pop();
+                        op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
+                                               // contain 3, 3. Thus we make +'s children 3.
+                        stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
+                    }
                 }
                 else // variable
                 {
@@ -413,7 +415,7 @@ namespace Spreadsheet_Engine
         /// <returns></returns>
         /// <exception cref="DivideByZeroException"></exception>
         /// <exception cref="Exception"></exception>
-        private double Evaluate(Node node)
+        private static double Evaluate(Node node)
         {
            if(node != null)
             {

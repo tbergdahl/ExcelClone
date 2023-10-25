@@ -24,15 +24,23 @@ namespace Spreadsheet_Engine
         /// <exception cref="DivideByZeroException"></exception>
         public override double Evaluate()
         {
-            double left = Left.Evaluate();
-            double right = Right.Evaluate();
-            if (right != 0.0)
+            if (Left != null && Right != null)
             {
-                return left / right;
+                double left = Left.Evaluate();
+                double right = Right.Evaluate();
+
+                if (right != 0.0)
+                {
+                    return left / right;
+                }
+                else
+                {
+                    throw new DivideByZeroException("Cannot Divide By Zero.");
+                }
             }
             else
             {
-                throw new DivideByZeroException("Cannot Divide By Zero.");
+                throw new Exception("Invalid Tree.");
             }
         }
     }

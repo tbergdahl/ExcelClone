@@ -23,7 +23,14 @@ namespace Spreadsheet_Engine
         /// <returns></returns>
         public override double Evaluate()
         {
-            return Left.Evaluate() - Right.Evaluate();
+            if (Left != null && Right != null)
+            {
+                return Left.Evaluate() - Right.Evaluate();
+            }
+            else
+            {
+                throw new Exception("Invalid Tree.");
+            }
         }
     }
 }

@@ -18,14 +18,14 @@ namespace Spreadsheet_Engine.OperatorNodeStuff
         /// <returns></returns>
         public static OperatorNode? Create(char op)
         {
-            switch(op)
+            return op switch
             {
-                case '+': return new AdditionOperatorNode("+");
-                case '-': return new SubtractionOperatorNode("-");
-                case '*': return new MultiplicationOperatorNode("*");
-                case '/': return new DivisionOperatorNode("/");
-                default: return null;
-            }
+                '+' => new AdditionOperatorNode("+"),
+                '-' => new SubtractionOperatorNode("-"),
+                '*' => new MultiplicationOperatorNode("*"),
+                '/' => new DivisionOperatorNode("/"),
+                _ => null,
+            };
         }
 
         /// <summary>
@@ -35,14 +35,14 @@ namespace Spreadsheet_Engine.OperatorNodeStuff
         /// <returns></returns>
         public static int Precedence(char op)
         {
-            switch (op)
+            return op switch
             {
-                case '+': return 1;
-                case '-': return 1;
-                case '*': return 2;
-                case '/': return 2;
-                default: return 0;
-            }
+                '+' => 1,
+                '-' => 1,
+                '*' => 2,
+                '/' => 2,
+                _ => 0,
+            };
         }
 
 
