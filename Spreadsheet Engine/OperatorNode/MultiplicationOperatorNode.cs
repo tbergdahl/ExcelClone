@@ -11,9 +11,11 @@ namespace Spreadsheet_Engine
     /// </summary>
     internal class MultiplicationOperatorNode : OperatorNodeStuff.OperatorNode
     {
-        public MultiplicationOperatorNode(string s) : base(s, Associativity.LEFT) 
+        public MultiplicationOperatorNode()
         {
-            precedence = 1;
+            Precedence = 2;
+            Assoc = Associativity.LEFT;
+            OperationType = "*";
         }
 
         /// <summary>

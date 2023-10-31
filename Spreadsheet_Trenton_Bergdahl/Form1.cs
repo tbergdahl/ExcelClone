@@ -14,6 +14,7 @@ namespace Spreadsheet_Trenton_Bergdahl
     public partial class Form1 : Form
     {
         private readonly Spreadsheet sheet;
+        string oldStringTextBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
@@ -80,6 +81,25 @@ namespace Spreadsheet_Trenton_Bergdahl
                         }
                     }
                 }
+            }
+        }
+
+        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DataGridViewCell current = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            if (current != null)
+            {
+                current.Value = this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1).Text;
+            }
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewCell current = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            if (current != null)
+            {
+                this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1).Text = current.Value.ToString();
+                this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1).SendNotification();
             }
         }
 

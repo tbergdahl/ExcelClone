@@ -4,7 +4,7 @@ namespace Spreadsheet_Trenton_Bergdahl
     using Spreadsheet_Engine;
     using System.ComponentModel;
 
-    partial class Form1 
+    partial class Form1
     {
         /// <summary>
         ///  Required designer variable.
@@ -53,6 +53,8 @@ namespace Spreadsheet_Trenton_Bergdahl
             dataGridView1.RowTemplate.Height = 29;
             dataGridView1.Size = new Size(798, 451);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellBeginEdit += dataGridView1_CellBeginEdit;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             // 
             // A
             // 

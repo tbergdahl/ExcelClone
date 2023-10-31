@@ -12,10 +12,11 @@ namespace Spreadsheet_Engine
     /// </summary>
     internal class AdditionOperatorNode: OperatorNodeStuff.OperatorNode
     {
-        public AdditionOperatorNode(string s) : base(s, Associativity.LEFT) 
+        public AdditionOperatorNode() 
         {
-            precedence = 0;
-            associativity = 0;
+            Precedence = 1;
+            Assoc = Associativity.LEFT;
+            OperationType = "+";
         }
 
 

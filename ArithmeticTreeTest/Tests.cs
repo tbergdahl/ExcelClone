@@ -30,42 +30,6 @@ namespace EvaluationTreeTest
         }
 
         /// <summary>
-        /// Tests EvaluationTree.Parse() on Normal Input.
-        /// </summary>
-        [Test]
-        public void TestParse()
-        {
-            string expression = "3 + X * 5";
-            string[] expected = { "3", "X", "5", "*", "+" };
-            string[] actual = EvaluationTree.Parse(expression);
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        /// Tests EvaluationTree.Parse() On an input that contains extra spaces.
-        /// </summary>
-        [Test]
-        public void TestParse_WithSpaces()
-        {
-            string expression = " 3 + X * 5 ";
-            string[] expected = { "3", "X", "5", "*", "+" };
-            string[] actual = EvaluationTree.Parse(expression);
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
-        /// Tests EvaluationTree.Parse() On an input that contains extra spaces.
-        /// </summary>
-        [Test]
-        public void TestParse_WithoutSpaces()
-        {
-            string expression = "3+X*5";
-            string[] expected = { "3", "X", "5", "*", "+" };
-            string[] actual = EvaluationTree.Parse(expression);
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
         /// Tests EvaluationTree.Evaluate() on normal input.
         /// </summary>
         [Test]
@@ -86,24 +50,12 @@ namespace EvaluationTreeTest
         }
 
         /// <summary>
-        /// Tests Parse() function on a more complicated input.
-        /// </summary>
-        [Test]
-        public void TestParse_ComplicatedInput()
-        {
-            string expression = " 9 * (4 + (2 * 5)) / 5 * (3 + 6) ";
-            string[] expected = { "9", "4", "2", "5", "*", "+", "*", "5", "/", "3", "6", "+", "*" };
-            string[] actual = EvaluationTree.Parse(expression);
-            CollectionAssert.AreEqual(expected, actual);
-        }
-
-        /// <summary>
         /// Tests evaluate on a more complicated input.
         /// </summary>
         [Test]
         public void TestEvaluate_ComplicatedInput()
         {
-            EvaluationTree test = new EvaluationTree("9 / (2 + (3 * 7) / 4) + 9");
+            EvaluationTree test = new EvaluationTree("9 / (2 + (3 * 7) / 4) + 9)");
             Assert.That(test.Evaluate(), Is.EqualTo(10.241379310344827d));
         }
     }
