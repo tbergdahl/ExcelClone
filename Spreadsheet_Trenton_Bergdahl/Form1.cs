@@ -123,7 +123,7 @@ namespace Spreadsheet_Trenton_Bergdahl
                         {
                             try
                             {
-                                cell.Text = current.Value.ToString();
+                                cell.Text = current.Value.ToString(); // when value changes, check exceptions
                             }
                             catch (InvalidExpressionException ex)
                             {
@@ -145,7 +145,5 @@ namespace Spreadsheet_Trenton_Bergdahl
                 }
             }
         }
-
-        
     }
 }

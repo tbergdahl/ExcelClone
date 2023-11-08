@@ -151,7 +151,7 @@ namespace Spreadsheet_Engine
                     {
                         return;
                     }
-                    evaluated = value;// you have got to be actually seriously fucking kidding me CHANGE THE NAME TRENTON
+                    evaluated = value;
                     ValueChanged.Invoke(this, new PropertyChangedEventArgs(Value));
                     
                 }
@@ -264,7 +264,7 @@ namespace Spreadsheet_Engine
         {
             variables = new Dictionary<string, Spreadsheet.SpreadsheetCell>();// initialize variables dictionary
             factory = new OperatorNodeFactory(); //initialize factory
-            GetCellDelegate = del;
+            GetCellDelegate = del; // pass the delegate through the spreadsheet cell so it can initialize tree with it
             Compile(expression);
             
         }
@@ -276,7 +276,7 @@ namespace Spreadsheet_Engine
         {
             foreach(KeyValuePair<string, Spreadsheet.SpreadsheetCell> variable in variables)
             {
-                variables[variable.Key].ValueChanged += Reevaluate;
+                variables[variable.Key].ValueChanged += Reevaluate; // subscribe to every referenced cell's value changed event
             }
         }
 
@@ -289,11 +289,11 @@ namespace Spreadsheet_Engine
         {
             if(sender is Spreadsheet.SpreadsheetCell cell)
             {
-                foreach(KeyValuePair<string, Spreadsheet.SpreadsheetCell> variable in variables)
+                foreach(KeyValuePair<string, Spreadsheet.SpreadsheetCell> variable in variables) // go through variables to find match
                 {
                     if(cell == variable.Value)
                     {
-                        VariableChanged.Invoke(this, new PropertyChangedEventArgs(variable.Key));
+                        VariableChanged.Invoke(this, new PropertyChangedEventArgs(variable.Key));// notify the cell containing this tree that a varible updated
                     }
                 }
             }
@@ -343,7 +343,7 @@ namespace Spreadsheet_Engine
                 {
                     if (exp.Length >= 2)
                     {
-                        string secondPart = exp.Length == 2 ? exp[1].ToString() : exp.Substring(1);
+                        string secondPart = exp.Length == 2 ? exp[1].ToString() : exp.Substring(1);// handle A1, as well as something like A13
 
                         if (int.TryParse(secondPart, out int row))
                         {
@@ -392,7 +392,7 @@ namespace Spreadsheet_Engine
         public string[] Parse(string expression)
         {
             int left_parenthesis = 0, right_parenthesis = 0;
-            for(int i = 0; i < expression.Length; i++)
+            for(int i = 0; i < expression.Length; i++)// parenthesis counting to ensure there are matching open and close parenthesis
             {
                 if (expression[i] == '(')
                 {
