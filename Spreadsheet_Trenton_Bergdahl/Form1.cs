@@ -4,6 +4,7 @@
 namespace Spreadsheet_Trenton_Bergdahl
 {
     using System.ComponentModel;
+    using System.Data;
     using System.Numerics;
     using Spreadsheet_Engine;
     using static Spreadsheet_Engine.Spreadsheet;
@@ -14,7 +15,6 @@ namespace Spreadsheet_Trenton_Bergdahl
     public partial class Form1 : Form
     {
         private readonly Spreadsheet sheet;
-        string oldStringTextBox;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
@@ -58,59 +58,94 @@ namespace Spreadsheet_Trenton_Bergdahl
         private void Spreadsheet_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             string? indices = e?.PropertyName;
-
-            if (indices != null)
+            if (this.sheet.GetCell != null)
             {
-                string[] indexParts = indices.Split(' ');
-
-                if (indexParts.Length == 2)
+                if (indices != null)
                 {
-                    if (int.TryParse(indexParts[0], out int rowIndex) && int.TryParse(indexParts[1], out int columnIndex))
-                    {
-                        var dataGridViewRow = this.dataGridView1.Rows[rowIndex - 1];
-                        var dataGridViewCell = dataGridViewRow?.Cells[columnIndex - 1];
-                        var spreadsheetCell = this.sheet.GetCell(rowIndex, columnIndex);
+                    string[] indexParts = indices.Split(' ');
 
-                        if (dataGridViewCell != null && spreadsheetCell != null)
+                    if (indexParts.Length == 2)
+                    {
+                        if (int.TryParse(indexParts[0], out int rowIndex) && int.TryParse(indexParts[1], out int columnIndex))
                         {
-                            dataGridViewCell.Value = spreadsheetCell.Value;
-                        }
-                        else
-                        {
-                            return;
+                            var dataGridViewRow = this.dataGridView1.Rows[rowIndex - 1];
+                            var dataGridViewCell = dataGridViewRow?.Cells[columnIndex - 1];
+                            var spreadsheetCell = this.sheet.GetCell(rowIndex, columnIndex);
+
+                            if (dataGridViewCell != null && spreadsheetCell != null)
+                            {
+                                dataGridViewCell.Value = spreadsheetCell.Value;
+                            }
+                            else
+                            {
+                                return;
+                            }
                         }
                     }
                 }
             }
         }
 
-        private void dataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        private void DataGridView1_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            DataGridViewCell current = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            DataGridViewCell current = this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
             if (current != null)
             {
-                current.Value = this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1).Text;
+                if (this.sheet.GetCell != null)
+                {
+                    SpreadsheetCell? cell = this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1);
+                    if (cell != null)
+                    {
+                        if (cell.Text != null)
+                        {
+                            current.Value = cell.Text;
+                        }
+                    }
+                }
             }
         }
 
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewCell current = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
+            DataGridViewCell current = this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
             if (current != null)
             {
-                this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1).Text = current.Value.ToString();
-                this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1).SendNotification();
+                if (this.sheet.GetCell != null)
+                {
+                    SpreadsheetCell? cell = this.sheet.GetCell(current.RowIndex + 1, current.ColumnIndex + 1);
+                    if (cell != null)
+                    {
+                        if (cell.Text == current.Value.ToString()) // if they just viewed the formula (didn't change it)
+                        {
+                            current.Value = cell.Value;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                cell.Text = current.Value.ToString();
+                            }
+                            catch (InvalidExpressionException ex)
+                            {
+                                cell.Text = string.Empty;
+                                MessageBox.Show("An Error Occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch (ArgumentOutOfRangeException ex)
+                            {
+                                cell.Text = string.Empty;
+                                MessageBox.Show("An Error Occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            catch (DivideByZeroException ex)
+                            {
+                                cell.Text = string.Empty;
+                                MessageBox.Show("An Error Occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                }
             }
         }
 
-        /// <summary>
-        /// When button clicked, preform demo for HW4.
-        /// </summary>
-        /// <param name="sender"> What object sent notification. </param>
-        /// <param name="e"> Event arguments. </param>
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            this.sheet.Demo();
-        }
+        
     }
 }

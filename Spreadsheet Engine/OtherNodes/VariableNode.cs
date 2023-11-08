@@ -9,9 +9,9 @@ namespace Spreadsheet_Engine
     public class VariableNode : Node
     {
         readonly string varName;
-        readonly Dictionary<string, double> variables;
+        readonly Dictionary<string, Spreadsheet.SpreadsheetCell> variables;
 
-        public VariableNode(string newVarName, Dictionary<string, double> treeDic)
+        public VariableNode(string newVarName, Dictionary<string, Spreadsheet.SpreadsheetCell> treeDic)
         {
             this.varName = newVarName;
             variables = treeDic;
@@ -25,9 +25,16 @@ namespace Spreadsheet_Engine
 
         public override double Evaluate()
         {
-            if( variables.TryGetValue(varName, out var value) == true)
+            if( variables.TryGetValue(varName, out var cell) == true)
             {
-                return value;
+                if (cell.Value != null)
+                {
+                    return double.Parse(cell.Value);
+                }
+                else
+                {
+                    throw new Exception("Variable Doesn't Exist.\n");
+                }
             }
             else
             {

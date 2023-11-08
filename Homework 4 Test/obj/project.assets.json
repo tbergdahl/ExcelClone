@@ -1032,9 +1032,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Homework 4 Test.csproj",
-      "projectName": "Homework 4 Test",
-      "projectPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Homework 4 Test.csproj",
+      "projectUniqueName": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Spreadsheet Engine Tests.csproj",
+      "projectName": "Spreadsheet Engine Tests",
+      "projectPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\Spreadsheet Engine Tests.csproj",
       "packagesPath": "C:\\Users\\trent\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 4 Test\\obj\\",
       "projectStyle": "PackageReference",

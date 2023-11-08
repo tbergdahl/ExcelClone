@@ -1,3 +1,8 @@
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.csproj.AssemblyReference.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.AssemblyInfoInputs.cache
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.AssemblyInfo.cs
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.csproj.CoreCompileInputs.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bin\Debug\net7.0-windows\EvaluationTreeConsoleApp.exe
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bin\Debug\net7.0-windows\EvaluationTreeConsoleApp.deps.json
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bin\Debug\net7.0-windows\EvaluationTreeConsoleApp.runtimeconfig.json
@@ -5,11 +10,6 @@ C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bi
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bin\Debug\net7.0-windows\EvaluationTreeConsoleApp.pdb
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bin\Debug\net7.0-windows\Spreadsheet Engine.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\bin\Debug\net7.0-windows\Spreadsheet Engine.pdb
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.csproj.AssemblyReference.cache
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.AssemblyInfoInputs.cache
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.AssemblyInfo.cs
-C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.csproj.CoreCompileInputs.cache
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.csproj.CopyComplete
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\EvaluationTreeConsoleApp.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\ArithmeticTreeConsoleApp\obj\Debug\net7.0-windows\refint\EvaluationTreeConsoleApp.dll
