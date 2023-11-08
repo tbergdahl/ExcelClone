@@ -11,9 +11,11 @@ namespace Spreadsheet_Engine
     /// </summary>
     internal class DivisionOperatorNode : OperatorNodeStuff.OperatorNode
     {
-        public DivisionOperatorNode(string s) : base(s, Associativity.LEFT) 
+        public DivisionOperatorNode()
         {
-            precedence = 1;
+            Precedence = 2;
+            Assoc = Associativity.LEFT;
+            OperationType = "/";
         }
 
 

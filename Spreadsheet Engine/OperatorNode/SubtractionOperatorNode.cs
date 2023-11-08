@@ -12,9 +12,11 @@ namespace Spreadsheet_Engine
     internal class SubtractionOperatorNode : OperatorNodeStuff.OperatorNode
     {
         
-        public SubtractionOperatorNode(string s) : base(s, Associativity.LEFT)
+        public SubtractionOperatorNode()
         {
-            precedence = 0;
+            Precedence = 1;
+            Assoc = Associativity.LEFT;
+            OperationType = "-";
         }
 
         /// <summary>

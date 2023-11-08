@@ -32,6 +32,11 @@ namespace Spreadsheet_Engine
             {
                 get { return rowIndex; }
             }
+
+            public void SendNotification()
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Text));
+            }
             public string? Text
             {
                 get => text;
@@ -45,16 +50,18 @@ namespace Spreadsheet_Engine
                     text = value;
                     if (PropertyChanged != null)
                     {
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Text));
+                        SendNotification();
                     }
                 }
             }
             public string? Value
             {
                 get { return evaluated; }
+                set { }
             }
         }
 
+    public delegate Spreadsheet.SpreadsheetCell? GetCellDelegate(int row, int col);
 
     public class Spreadsheet
     {
@@ -62,6 +69,11 @@ namespace Spreadsheet_Engine
         /// private data members to specify the max number of rows and columns in the spreadsheet instance.
         /// </summary>
         private int numRows, numCols;
+
+
+       
+
+        public GetCellDelegate? GetCell;
 
         /// <summary>
         /// cells contains all of the SpreadSheet cells.
@@ -87,6 +99,11 @@ namespace Spreadsheet_Engine
         /// </summary>
         public class SpreadsheetCell : Cell
         {
+
+
+            public EvaluationTree? tree;
+            public event PropertyChangedEventHandler ValueChanged = delegate { };
+
             /// <summary>
             /// Uses Cell constructor as SpreadsheetCell constructor
             /// </summary>
@@ -97,10 +114,47 @@ namespace Spreadsheet_Engine
                 
             }
 
+            /// <summary>
+            /// Event handler that updates the Value of the cell and sends a notification to the WinForms spreadsheet.
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            private void TreeValueChanged(object? sender, PropertyChangedEventArgs e)
+            {
+                if(sender is EvaluationTree tree)
+                {
+                    this.Value = tree.Evaluate().ToString();
+                    this.SendNotification();
+                }
+            }
+
+            /// <summary>
+            /// Builds a new tree with the given expression and subscribes to it's variable changed event
+            /// </summary>
+            /// <param name="expression"></param>
+            /// <param name="func"></param>
+            public void BuildNewTree(string expression, GetCellDelegate func)
+            {
+                this.tree = new EvaluationTree(func, expression.Substring(1));
+                this.tree.VariableChanged += this.TreeValueChanged; // subscribe the cell to it's tree's variable changed event so it can revaluate the tree
+                this.Value = this.tree.Evaluate().ToString();
+            }
+
+
             public new string? Value
             {
-                get { return evaluated; }
-                set { evaluated = value; }
+                get => evaluated;
+                set
+                {
+
+                    if (evaluated == value)
+                    {
+                        return;
+                    }
+                    evaluated = value;
+                    ValueChanged.Invoke(this, new PropertyChangedEventArgs(Value));
+                    
+                }
             }
         }     
         
@@ -114,6 +168,7 @@ namespace Spreadsheet_Engine
         {
             numRows = nRows;
             numCols = nCols;
+            GetCell = GetCellAtPos;
             if (nRows > 0 && nCols > 0)
             {
                 cells = new SpreadsheetCell[nRows, nCols];
@@ -141,37 +196,27 @@ namespace Spreadsheet_Engine
         private void Cell_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is SpreadsheetCell cell)
-            {
-                if (cell.Text != cell.Value)// there is a change in text
+            {                          
+                if (cell.Text?.StartsWith('=') == true)//we have a formula
                 {
-                    
-                    if (cell.Text?.StartsWith('=') == true)//we have a formula
+                    if (GetCell != null)
                     {
-                        if(cell.Text?.Length > 2 && int.TryParse(cell.Text.AsSpan(1), out int rowIndex))//verify proper index format held after '='
-                        {
-                            int colIndex = cell.Text[1] - 'A';
-                            var target = this.GetCell(rowIndex, colIndex);
-                            if(target != null)
-                            {
-                                cell.Value = target.Value;
-                                cell.Text = cell.Value;
-                            }
-                            else
-                            {
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        cell.Value = cell.Text;
+                        cell.BuildNewTree(cell.Text, GetCell);
                     }
                 }
+                else
+                {
+                    cell.Value = cell.Text;
+                }
+                
                 string str = cell.RowIndex.ToString() + " " + cell.ColIndex.ToString();
                 CellPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(str));
             }
             return;
         }
+
+
+       
 
 
         /// <summary>
@@ -180,7 +225,7 @@ namespace Spreadsheet_Engine
         /// <param name="row"></param>
         /// <param name="col"></param>
         /// <returns> cell </returns>
-        public SpreadsheetCell? GetCell(int row, int col)
+        public SpreadsheetCell? GetCellAtPos(int row, int col)
         {
             if (row < numRows && col < numCols && row >= 0 && col >= 0)
             {
@@ -192,30 +237,7 @@ namespace Spreadsheet_Engine
             }
         }
 
-        /// <summary>
-        /// Performs HW4 demo.
-        /// </summary>
-        public void Demo()
-        {
-            //cells[50, 26].Text = "YUP";
-
-
-            Random num = new Random();
-            int row, col;
-            string text = "yup";
-            for (int i = 0; i < 50; i++)// generate 50 random indeces
-            {
-                row = num.Next(1, 51);
-                col = num.Next(1, 27);
-                cells[row, col].Text = text;
-            }
-
-            for(int i = 1; i < 51; i++)
-            {
-                cells[i, 2].Text = "This is cell B" + i + ".";
-                cells[i, 1].Text = cells[i, 2].Text; 
-            }
-        }
+      
     }
 
 
@@ -225,65 +247,170 @@ namespace Spreadsheet_Engine
 
     public class EvaluationTree
     {
-
-        private Dictionary<string, double> variables;
-        readonly Node root;
+       
+        
+        private Dictionary<string, Spreadsheet.SpreadsheetCell> variables;
+        Node? root;
+        private readonly OperatorNodeFactory factory;
+        private readonly GetCellDelegate? GetCellDelegate;
+        public event PropertyChangedEventHandler VariableChanged = delegate { };
 
 
         /// <summary>
         /// Constructor that builds the tree based off input expression.
         /// </summary>
         /// <param name="expression"></param>
-        public EvaluationTree(string expression)
+        public EvaluationTree(GetCellDelegate del, string expression = "0 + 0")
         {
-            variables = new Dictionary<string, double>();// initialize variables dictionary
+            variables = new Dictionary<string, Spreadsheet.SpreadsheetCell>();// initialize variables dictionary
+            factory = new OperatorNodeFactory(); //initialize factory
+            GetCellDelegate = del; // pass the delegate through the spreadsheet cell so it can initialize tree with it
+            Compile(expression);
+            
+        }
 
+        /// <summary>
+        /// Function that subscribes the cells held in the variable list to each Cell's value changed event.
+        /// </summary>
+        private void SubscribeToReferencedCells()
+        {
+            foreach(KeyValuePair<string, Spreadsheet.SpreadsheetCell> variable in variables)
+            {
+                variables[variable.Key].ValueChanged += Reevaluate; // subscribe to every referenced cell's value changed event
+            }
+        }
+
+        /// <summary>
+        /// When a cell variable sends an update that its value changed, notify the cell so it can tell the tree to recompile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Reevaluate(object? sender, PropertyChangedEventArgs e)
+        {
+            if(sender is Spreadsheet.SpreadsheetCell cell)
+            {
+                foreach(KeyValuePair<string, Spreadsheet.SpreadsheetCell> variable in variables) // go through variables to find match
+                {
+                    if(cell == variable.Value)
+                    {
+                        VariableChanged.Invoke(this, new PropertyChangedEventArgs(variable.Key));// notify the cell containing this tree that a varible updated
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Builds the expression tree.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <exception cref="Exception"></exception>
+        public void Compile(string expression)
+        {
             Stack<Node> stack = new Stack<Node>();// Using a stack to store the order of the nodes in the tree (first node is at bottom of tree)
             string[] expressions = Parse(expression);
-            
-            foreach (string exp in expressions) 
+
+            foreach (string exp in expressions)
             {
-                
+
                 if (char.IsDigit(exp[0]))
                 {
                     stack.Push(new NumericNode(double.Parse(exp)));
                 }
-                else if (exp[0] == '+' || exp[0] == '-' || exp[0] == '/' || exp[0] == '*')
+                else if (factory.IsOperator(exp))
                 {
-                    OperatorNode? op = OperatorNodeFactory.Create(exp[0]);
+                    OperatorNode? op = factory.Create(exp);
                     if (op != null)
                     {
-                        op.Right = stack.Pop();
-                        op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
-                                               // contain 3, 3. Thus we make +'s children 3.
-                        stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
+                        if (stack.Count >= 2)
+                        {
+                            op.Right = stack.Pop();
+                            op.Left = stack.Pop(); // based off the format of the parsing (3, 3, +), the two preceeding nodes on the stack should
+                                                   // contain 3, 3. Thus we make +'s children 3.
+                            stack.Push(op); // if we have something like 3 + 3 * 8, makes 3 + 3 child of *
+                        }
+                        else
+                        {
+                            throw new InvalidExpressionException("Invalid Expression");
+                        }
                     }
+                }
+                else if (exp[0] == '(' || exp[0] == ')')
+                {
+                    throw new InvalidExpressionException("Invalid Expression.");
                 }
                 else // variable
                 {
-                    stack.Push(new VariableNode(exp, variables));
-                    variables[exp] = 0;
+                    if (exp.Length >= 2)
+                    {
+                        string secondPart = exp.Length == 2 ? exp[1].ToString() : exp.Substring(1);// handle A1, as well as something like A13
+
+                        if (int.TryParse(secondPart, out int row))
+                        {
+                            if (GetCellDelegate != null)
+                            {
+                                int column = exp[0] - 'A' + 1;
+                                Spreadsheet.SpreadsheetCell? varCell = GetCellDelegate(row, column);
+
+                                if (varCell != null && varCell.Value != null)
+                                {
+                                    variables[exp] = varCell;
+                                    stack.Push(new VariableNode(exp, variables));
+                                }
+                                else
+                                {
+                                    string cellReference = (exp[0]).ToString() + row.ToString();
+                                    throw varCell?.Value == null
+                                        ? new InvalidExpressionException("Referenced Cell " + cellReference + " Does Not Have a Value to Reference.")
+                                        : new ArgumentOutOfRangeException(cellReference);
+                                }
+                            }
+                        }
+                    }
+
+
                 }
             }
 
-            if(stack.Count == 1)
+            if (stack.Count == 1)
             {
                 root = stack.Pop();
+                SubscribeToReferencedCells();
             }
             else
             {
                 throw new Exception("Improper Expression Input.");
             }
-
         }
+
 
         /// <summary>
         /// Splits expression into subexpressions to build nodes
         /// </summary>
         /// <param name="expression"></param>
         /// <returns></returns>
-        static public string[] Parse(string expression)
+        public string[] Parse(string expression)
         {
+            int left_parenthesis = 0, right_parenthesis = 0;
+            for(int i = 0; i < expression.Length; i++)// parenthesis counting to ensure there are matching open and close parenthesis
+            {
+                if (expression[i] == '(')
+                {
+                    left_parenthesis++;
+                }
+                else if (expression[i] == ')')
+                {
+                    right_parenthesis++;
+                }
+            }
+            if(left_parenthesis != right_parenthesis)
+            {
+                throw new InvalidExpressionException("Matching Parenthesis Not Found.");
+            }
+
+
+
+
             List<string> tokens = new List<string>();
             string token = "";
             if (expression != null)
@@ -331,8 +458,6 @@ namespace Spreadsheet_Engine
 
                 }
             }
-
-
              return ToPostfix(tokens);
         }
 
@@ -342,12 +467,10 @@ namespace Spreadsheet_Engine
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        private static string[] ToPostfix(List<string> input)
+        private string[] ToPostfix(List<string> input)
         {
             Stack<string> operators = new Stack<string>();
-            Queue<string> output = new Queue<string>();
-
-            
+            Queue<string> output = new Queue<string>();          
 
             foreach (string token in input)
             {
@@ -365,11 +488,14 @@ namespace Spreadsheet_Engine
                     {
                         output.Enqueue(operators.Pop());
                     }
-                    operators.Pop();
+                    if (operators.Count != 0)
+                    {
+                        operators.Pop();
+                    }
                 }
-                else if (OperatorNodeFactory.Precedence(token[0]) != 0)
+                else if (factory.IsOperator(token))
                 {
-                    while(operators.Count > 0 && operators.Peek()[0] != '(' && OperatorNodeFactory.Precedence(token[0]) <= OperatorNodeFactory.Precedence(operators.Peek()[0]))
+                    while(operators.Count > 0 && operators.Peek()[0] != '(' && factory.Precedence(token) <= factory.Precedence(operators.Peek()))
                     {
                         output.Enqueue(operators.Pop());
                     }
@@ -386,16 +512,19 @@ namespace Spreadsheet_Engine
             return output.ToArray();
         }
         
-
+        public List<string> GetVariableNames()
+        {
+            return variables.Keys.ToList();
+        }
 
         /// <summary>
         /// Updates dictionary to store a variable.
         /// </summary>
         /// <param name="variableName"></param>
         /// <param name="variableValue"></param>
-        public void SetVariable(string variableName, double variableValue)
+        public void SetVariable(string cellName, Spreadsheet.SpreadsheetCell cell)
         {
-            variables[variableName] = variableValue;
+            variables[cellName] = cell;
         }
 
         /// <summary>
@@ -405,7 +534,14 @@ namespace Spreadsheet_Engine
 
         public double Evaluate()
         {
-           return Evaluate(root);
+            if (root != null)
+            {
+                return Evaluate(root);
+            }
+            else
+            {
+                throw new Exception("Root Is Null");
+            }
         }
 
         /// <summary>

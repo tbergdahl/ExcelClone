@@ -11,3 +11,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>", Scope = "member", Target = "~F:Spreadsheet_Engine.EvaluationTree.variables")]
 [assembly: SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "<Pending>", Scope = "member", Target = "~M:Spreadsheet_Engine.EvaluationTree.#ctor(System.String)")]
 [assembly: SuppressMessage("Style", "IDE0020:Use pattern matching", Justification = "<Pending>", Scope = "member", Target = "~M:Spreadsheet_Engine.EvaluationTree.Evaluate(Spreadsheet_Engine.Node)~System.Double")]
+[assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Spreadsheet_Engine.Spreadsheet.SpreadsheetCell.BuildNewTree(System.String,Spreadsheet_Engine.GetCellDelegate)")]
+[assembly: SuppressMessage("Style", "IDE0057:Use range operator", Justification = "<Pending>", Scope = "member", Target = "~M:Spreadsheet_Engine.EvaluationTree.Compile(System.String)")]

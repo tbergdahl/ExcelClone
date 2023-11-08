@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreadsheet_Trenton_Bergdah
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreadsheet Engine", "Spreadsheet Engine\Spreadsheet Engine.csproj", "{DBE81A08-CD32-4A50-9FC5-1E87FA0A1DEE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework 4 Test", "Homework 4 Test\Homework 4 Test.csproj", "{54978831-E8E7-4AF4-8E7B-F33F5ECB4887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spreadsheet Engine Tests", "Homework 4 Test\Spreadsheet Engine Tests.csproj", "{54978831-E8E7-4AF4-8E7B-F33F5ECB4887}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EvaluationTreeConsoleApp", "ArithmeticTreeConsoleApp\EvaluationTreeConsoleApp.csproj", "{D74AE274-4B22-4D0C-A820-5E4E072C83FD}"
 	ProjectSection(ProjectDependencies) = postProject

@@ -1,7 +1,8 @@
 using Spreadsheet_Engine;
-
+using System.Data;
 namespace Homework_4_Test
 {
+    
     public class Tests
     {
         [SetUp]
@@ -39,7 +40,7 @@ namespace Homework_4_Test
         public void TestType()
         {
             Spreadsheet_Engine.Spreadsheet spreadsheet = new Spreadsheet_Engine.Spreadsheet(2, 2);
-            object? test = spreadsheet.GetCell(1, 1);
+            object? test = spreadsheet.GetCellAtPos(1, 1);
             Assert.That(test, Is.InstanceOf<Spreadsheet_Engine.Spreadsheet.SpreadsheetCell>());
         }
 
@@ -50,8 +51,96 @@ namespace Homework_4_Test
         public void Test_GetCell()
         {
             Spreadsheet_Engine.Spreadsheet spreadsheet = new Spreadsheet_Engine.Spreadsheet(3, 3);
-            Assert.That(spreadsheet.GetCell(4, 1), Is.Null);
+            Assert.That(spreadsheet.GetCellAtPos(4, 1), Is.Null);
         }
+
+        /// <summary>
+        /// Tests a cell building a tree with an invalid operator.
+        /// </summary>
+        [Test]
+        public void Test_InvalidOperator()
+        {
+            Spreadsheet_Engine.Spreadsheet.SpreadsheetCell cell = new Spreadsheet_Engine.Spreadsheet.SpreadsheetCell(1, 1);
+            Spreadsheet_Engine.Spreadsheet sheet = new Spreadsheet(28, 51);
+            GetCellDelegate del = sheet.GetCellAtPos;
+            Assert.Throws<InvalidOperationException>(() => cell.BuildNewTree("=9 ^ 6", del));
+        }
+
+        /// <summary>
+        /// Tests EvaluationTree.Evaluate() on normal input.
+        /// </summary>
+        [Test]
+        public void TestEvaluate()
+        {
+            Spreadsheet_Engine.Spreadsheet.SpreadsheetCell cell = new Spreadsheet_Engine.Spreadsheet.SpreadsheetCell(1, 1);
+            Spreadsheet_Engine.Spreadsheet sheet = new Spreadsheet(28, 51);
+            GetCellDelegate del = sheet.GetCellAtPos;
+            cell.BuildNewTree("=(9 + 6) * 5", del);
+            if (cell.tree != null)
+            {
+                Assert.That(cell.tree.Evaluate(), Is.EqualTo(75));
+            }
+        }
+
+        /// <summary>
+        /// Tests edge case - divide by zero.
+        /// </summary>
+        [Test]
+        public void Test_DivideByZero()
+        {
+            Spreadsheet_Engine.Spreadsheet.SpreadsheetCell cell = new Spreadsheet_Engine.Spreadsheet.SpreadsheetCell(1, 1);
+            Spreadsheet_Engine.Spreadsheet sheet = new Spreadsheet(28, 51);
+            GetCellDelegate del = sheet.GetCellAtPos;
+            Assert.Throws<DivideByZeroException>(() => cell.BuildNewTree("=9 / 0", del));
+        }
+
+        /// <summary>
+        /// Tests evaluate on a more complicated input.
+        /// </summary>
+        [Test]
+        public void TestEvaluate_ComplicatedInput()
+        {
+            Spreadsheet_Engine.Spreadsheet.SpreadsheetCell cell = new Spreadsheet_Engine.Spreadsheet.SpreadsheetCell(1, 1);
+            Spreadsheet_Engine.Spreadsheet sheet = new Spreadsheet(28, 51);
+            GetCellDelegate del = sheet.GetCellAtPos;
+            cell.BuildNewTree("=((((9 + 8) * 6 / (8 * 7) - 2)+ 6) * 5) / 3", del);
+            if (cell.tree != null)
+            {
+                Assert.That(cell.tree.Evaluate(), Is.EqualTo(9.7023809523809508));
+            }
+        }
+
+
+        /// <summary>
+        /// Tests inputs when there aren't matching parenthesis.
+        /// </summary>
+        [Test]
+
+        public void Test_Parenthesis()
+        {
+            Spreadsheet_Engine.Spreadsheet.SpreadsheetCell cell = new Spreadsheet_Engine.Spreadsheet.SpreadsheetCell(1, 1);
+            Spreadsheet_Engine.Spreadsheet sheet = new Spreadsheet(28, 51);
+            GetCellDelegate del = sheet.GetCellAtPos;
+            Assert.Throws<InvalidExpressionException>(() => cell.BuildNewTree("=(9 + 6", del));
+            Assert.Throws<InvalidExpressionException>(() => cell.BuildNewTree("=9 + 6)", del));
+            Assert.Throws<InvalidExpressionException>(() => cell.BuildNewTree("=(9 + 6))", del));
+            Assert.Throws<InvalidExpressionException>(() => cell.BuildNewTree("=(9 + 6) + (5 * 3", del));
+        }
+
+
+        /// <summary>
+        /// Tests invlaid operators in expression.
+        /// </summary>
+        [Test]
+
+        public void Test_Incorrect_Operators()
+        {
+            Spreadsheet_Engine.Spreadsheet.SpreadsheetCell cell = new Spreadsheet_Engine.Spreadsheet.SpreadsheetCell(1, 1);
+            Spreadsheet_Engine.Spreadsheet sheet = new Spreadsheet(28, 51);
+            GetCellDelegate del = sheet.GetCellAtPos;
+            Assert.Throws<InvalidExpressionException>(() => cell.BuildNewTree("=9 + + 6", del));
+        }
+
 
     }
 }
