@@ -25,7 +25,7 @@ namespace Spreadsheet_Engine
 
         public override double Evaluate()
         {
-            if( variables.TryGetValue(varName, out var cell) == true)
+            if(variables.TryGetValue(varName, out var cell) == true)
             {
                 if (cell.Value != null)
                 {

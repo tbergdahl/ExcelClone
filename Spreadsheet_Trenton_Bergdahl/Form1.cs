@@ -6,6 +6,7 @@ namespace Spreadsheet_Trenton_Bergdahl
     using System.ComponentModel;
     using System.Data;
     using System.Numerics;
+    using System.Runtime.CompilerServices;
     using Spreadsheet_Engine;
     using static Spreadsheet_Engine.Spreadsheet;
 
@@ -26,6 +27,7 @@ namespace Spreadsheet_Trenton_Bergdahl
             this.InitializeDataGrid();
             this.sheet = new Spreadsheet(51, 27);
             this.sheet.CellPropertyChanged += this.Spreadsheet_PropertyChanged;
+            this.sheet.CellBackgroundColorChanged += this.Spreadsheet_BackgroundColorChanged;
         }
 
         /// <summary>
@@ -50,6 +52,42 @@ namespace Spreadsheet_Trenton_Bergdahl
             }
         }
 
+        private void Spreadsheet_BackgroundColorChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            string? indices = e?.PropertyName;
+            if (this.sheet.GetCell != null)
+            {
+                if (indices != null)
+                {
+                    string[] indexParts = indices.Split(' ');
+
+                    if (indexParts.Length == 2)
+                    {
+                        if (int.TryParse(indexParts[0], out int rowIndex) && int.TryParse(indexParts[1], out int columnIndex))
+                        {
+                            var dataGridViewRow = this.dataGridView1.Rows[rowIndex - 1];
+                            var dataGridViewCell = dataGridViewRow?.Cells[columnIndex - 1];
+                            var spreadsheetCell = this.sheet.GetCell(rowIndex, columnIndex);
+
+                            if (dataGridViewCell != null && spreadsheetCell != null)
+                            {
+                                byte alpha = (byte)((spreadsheetCell.BGColor & 0xFF000000) >> 24);
+                                byte red = (byte)((spreadsheetCell.BGColor & 0x00FF0000) >> 16);
+                                byte green = (byte)((spreadsheetCell.BGColor & 0x0000FF00) >> 8);
+                                byte blue = (byte)(spreadsheetCell.BGColor & 0x000000FF);
+                                Color cellColor = Color.FromArgb(alpha, red, green, blue);
+                                dataGridViewCell.Style.BackColor = cellColor;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Method that when notified of a spreadsheet change, updates the corresponding index on the form.
         /// </summary>
@@ -70,7 +108,7 @@ namespace Spreadsheet_Trenton_Bergdahl
                         {
                             var dataGridViewRow = this.dataGridView1.Rows[rowIndex - 1];
                             var dataGridViewCell = dataGridViewRow?.Cells[columnIndex - 1];
-                            var spreadsheetCell = this.sheet.GetCell(rowIndex, columnIndex);
+                            SpreadsheetCell? spreadsheetCell = this.sheet.GetCell(rowIndex, columnIndex);
 
                             if (dataGridViewCell != null && spreadsheetCell != null)
                             {
@@ -105,10 +143,33 @@ namespace Spreadsheet_Trenton_Bergdahl
             }
         }
 
+        private void UpdateUndoRedoMenuItemsText()
+        {
+            if (this.sheet.UndoStackEmpty())
+            {
+                this.undoToolStripMenuItem.Visible = false;
+            }
+            else
+            {
+                this.undoToolStripMenuItem.Text = "Undo " + this.sheet.GetNextUndoCommandName();
+                this.undoToolStripMenuItem.Visible = true;
+            }
+
+            if (this.sheet.RedoStackEmpty())
+            {
+                this.redoToolStripMenuItem.Visible = false;
+            }
+            else
+            {
+                this.redoToolStripMenuItem.Text = "Redo " + this.sheet.GetNextRedoCommandName();
+                this.redoToolStripMenuItem.Visible = true;
+            }
+        }
+
         private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewCell current = this.dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            if (current != null)
+            if (current != null && current.Value != null)
             {
                 if (this.sheet.GetCell != null)
                 {
@@ -123,7 +184,10 @@ namespace Spreadsheet_Trenton_Bergdahl
                         {
                             try
                             {
-                                cell.Text = current.Value.ToString(); // when value changes, check exceptions
+                                ChangeCellTextCommand command = new ChangeCellTextCommand(cell, current.Value.ToString());
+                                command.Execute();
+                                this.sheet.AddCommand(command);
+                                this.UpdateUndoRedoMenuItemsText();
                             }
                             catch (InvalidExpressionException ex)
                             {
@@ -144,6 +208,50 @@ namespace Spreadsheet_Trenton_Bergdahl
                     }
                 }
             }
+        }
+
+        private void ChangeSelectedCellColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                Color selectedColor = colorDialog.Color;
+                byte alpha = selectedColor.A;
+                byte red = selectedColor.R;
+                byte green = selectedColor.G;
+                byte blue = selectedColor.B;
+
+                uint bgColor = (uint)((alpha << 24) | (red << 16) | (green << 8) | blue);
+
+                ChangeCellBackgroundColorCommand command = new ChangeCellBackgroundColorCommand(bgColor);
+                foreach (DataGridViewCell viewCell in this.dataGridView1.SelectedCells)
+                {
+                    if (this.sheet != null && this.sheet.GetCell != null)
+                    {
+                        SpreadsheetCell? cell = this.sheet.GetCell(viewCell.RowIndex + 1, viewCell.ColumnIndex + 1);
+                        if (cell != null)
+                        {
+                            command.AddChangedCell(cell);
+                        }
+                    }
+                }
+
+                command.Execute();
+                this.sheet.AddCommand(command);
+                this.UpdateUndoRedoMenuItemsText();
+            }
+        }
+
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.sheet.Undo();
+            this.UpdateUndoRedoMenuItemsText();
+        }
+
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.sheet.Redo();
+            this.UpdateUndoRedoMenuItemsText();
         }
     }
 }
