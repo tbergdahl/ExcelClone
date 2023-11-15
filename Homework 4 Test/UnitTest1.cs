@@ -1,6 +1,6 @@
 using Spreadsheet_Engine;
 using System.Data;
-namespace Homework_4_Test
+namespace Spreadsheet_Engine
 {
     
     public class Tests
@@ -140,6 +140,40 @@ namespace Homework_4_Test
             GetCellDelegate del = sheet.GetCellAtPos;
             Assert.Throws<InvalidExpressionException>(() => cell.BuildNewTree("=9 + + 6", del));
         }
+
+
+        /// <summary>
+        /// Tests the text change command undo and redo functionality
+        /// </summary>
+        [Test]
+
+        public void Test_TextChangeCommand() 
+        {
+            Spreadsheet.SpreadsheetCell cell = new Spreadsheet.SpreadsheetCell(1, 1);
+            ChangeCellTextCommand command = new ChangeCellTextCommand(cell, "change");
+            command.Execute();
+            Assert.That(cell.Text, Is.EqualTo("change"));
+            command.Undo();
+            Assert.That(cell.Text, Is.EqualTo(null));
+        }
+
+        /// <summary>
+        /// Tests the background color change command undo and redo functionality
+        /// </summary>
+        [Test]
+
+        public void Test_BackgroundColorChangeCommand()
+        {
+            Spreadsheet.SpreadsheetCell cell = new Spreadsheet.SpreadsheetCell(1, 1);
+            ChangeCellBackgroundColorCommand command = new ChangeCellBackgroundColorCommand(0x5A8D2F);
+            command.AddChangedCell(cell);
+            command.Execute();
+            Assert.That(cell.BGColor, Is.EqualTo(0x5A8D2F));
+            command.Undo();
+            Assert.That(cell.BGColor, Is.EqualTo(4294967295));
+        }
+
+
 
 
     }
