@@ -231,7 +231,7 @@ namespace Spreadsheet_Trenton_Bergdahl
                         SpreadsheetCell? cell = this.sheet.GetCell(viewCell.RowIndex + 1, viewCell.ColumnIndex + 1);
                         if (cell != null)
                         {
-                            command.AddChangedCell(cell);
+                            command.AddChangedCell(cell); // see ChangeCellBackgroundColor.cs
                         }
                     }
                 }

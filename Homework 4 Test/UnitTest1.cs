@@ -142,6 +142,59 @@ namespace Spreadsheet_Engine
         }
 
 
+        //Homework 7 Tests
+
+        /// <summary>
+        /// Tests cell class to accurately update its value based on other cells.
+        /// </summary>
+        [Test]
+        public void Test_ReferencedCells()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            Spreadsheet.SpreadsheetCell cell1 = sheet.GetCell(1, 1);
+            Spreadsheet.SpreadsheetCell cell2 = sheet.GetCell(2, 2);
+            cell1.Text = "=3 + 89";
+            cell2.Text = "=A1 + 5";
+            Assert.That(cell2.Value, Is.EqualTo("97"));
+            cell1.Text = "=1 + 89";
+            Assert.That(cell2.Value, Is.EqualTo("95"));
+        }
+
+
+        /// <summary>
+        /// Tests exception handling for cells that reference cells that are out of bounds.
+        /// </summary>
+        [Test]
+
+        public void Test_ReferencedCells_OutOfBounds()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            Spreadsheet.SpreadsheetCell cell1 = sheet.GetCell(1, 1);
+            Spreadsheet.SpreadsheetCell cell2 = sheet.GetCell(2, 2);
+            cell1.Text = "=3 + 89";
+            Assert.Throws<InvalidExpressionException>(() => cell2.Text = "=A51 + 5");
+        }
+
+
+        /// <summary>
+        /// Tests exception handling for when a cell references a cell that doesn't have a value.
+        /// </summary>
+        [Test]
+
+        public void Test_ReferencedCells_NoCellValue()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            Spreadsheet.SpreadsheetCell cell1 = sheet.GetCell(1, 1);
+            Spreadsheet.SpreadsheetCell cell2 = sheet.GetCell(2, 2);
+            cell1.Text = "=3 + 89";
+            Assert.Throws<InvalidExpressionException>(() => cell2.Text = "=B3 + 5");
+        }
+
+
+
+
+        //Homework 8 Tests
+
         /// <summary>
         /// Tests the text change command undo and redo functionality
         /// </summary>

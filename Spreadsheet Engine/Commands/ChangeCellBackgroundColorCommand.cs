@@ -9,7 +9,8 @@ namespace Spreadsheet_Engine
     using Spreadsheet_Engine;
     public class ChangeCellBackgroundColorCommand : UndoRedoCommand
     {
-        List<Spreadsheet.SpreadsheetCell> cells;
+        List<Spreadsheet.SpreadsheetCell> cells; // keep track of all cells changed in a command instead of just one so
+        //one call to redo changes all of them at once
         public string description = "Change Cell(s) Background Color";
         private uint newBG, oldBG;
 

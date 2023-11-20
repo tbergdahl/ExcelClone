@@ -171,9 +171,6 @@ namespace Spreadsheet_Engine
                     throw new InvalidExpressionException("Matching Parenthesis Not Found.");
                 }
 
-
-
-
                 List<string> tokens = new List<string>();
                 string token = "";
                 if (expression != null)
