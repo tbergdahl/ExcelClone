@@ -18,17 +18,19 @@ namespace Spreadsheet_Engine
             private readonly OperatorNodeFactory factory;
             private readonly GetCellDelegate? GetCellDelegate;
             public event PropertyChangedEventHandler VariableChanged = delegate { };
+            Spreadsheet.SpreadsheetCell parentCell;
 
 
             /// <summary>
             /// Constructor that builds the tree based off input expression.
             /// </summary>
             /// <param name="expression"></param>
-            public EvaluationTree(GetCellDelegate del, string expression = "0 + 0")
+            public EvaluationTree(GetCellDelegate del, Spreadsheet.SpreadsheetCell parent, string expression = "0 + 0")
             {
                 variables = new Dictionary<string, Spreadsheet.SpreadsheetCell>();// initialize variables dictionary
                 factory = new OperatorNodeFactory(); //initialize factory
                 GetCellDelegate = del; // pass the delegate through the spreadsheet cell so it can initialize tree with it
+                parentCell = parent;
                 Compile(expression);
             }
 
@@ -72,6 +74,7 @@ namespace Spreadsheet_Engine
             {
                 Stack<Node> stack = new Stack<Node>();// Using a stack to store the order of the nodes in the tree (first node is at bottom of tree)
                 string[] expressions = Parse(expression);
+                bool throwException = true;
 
                 foreach (string exp in expressions)
                 {
@@ -115,17 +118,28 @@ namespace Spreadsheet_Engine
                                     int column = exp[0] - 'A' + 1;
                                     Spreadsheet.SpreadsheetCell? varCell = GetCellDelegate(row, column);
 
-                                    if (varCell != null && varCell.Value != null)
+                                    if (varCell != null)
                                     {
-                                        variables[exp] = varCell;
-                                        stack.Push(new VariableNode(exp, variables));
+                                        if (varCell != parentCell)
+                                        {
+                                            if (varCell.Value == null || varCell.Value == "!(bad reference)")
+                                            {
+                                                parentCell.Text = "!(bad reference)";
+                                                parentCell.SendNotification();
+                                            }
+                                            variables[exp] = varCell;
+                                            stack.Push(new VariableNode(exp, variables));
+                                        }
+                                        else
+                                        {
+                                            parentCell.Text = "!(self reference)";
+                                            return;
+                                        }
                                     }
                                     else
                                     {
-                                        string cellReference = (exp[0]).ToString() + row.ToString();
-                                        throw varCell?.Value == null
-                                            ? new InvalidExpressionException("Referenced Cell " + cellReference + " Does Not Have a Value to Reference.")
-                                            : new ArgumentOutOfRangeException(cellReference);
+                                        parentCell.Text = "!(bad reference)";
+                                        throwException = false;
                                     }
                                 }
                             }
@@ -140,9 +154,9 @@ namespace Spreadsheet_Engine
                     root = stack.Pop();
                     SubscribeToReferencedCells();
                 }
-                else
+                else if(throwException)
                 {
-                    throw new Exception("Improper Expression Input.");
+                    parentCell.Text = "!(bad reference)";
                 }
             }
 
@@ -300,7 +314,7 @@ namespace Spreadsheet_Engine
                 }
                 else
                 {
-                    throw new Exception("Root Is Null");
+                    return -1;
                 }
             }
 

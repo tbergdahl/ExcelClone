@@ -135,7 +135,7 @@ namespace Spreadsheet_Engine
         /// </summary>
         /// <param name="cell"></param>
         /// <returns></returns>
-        private bool IsNotDefault(SpreadsheetCell cell)
+        private static bool IsNotDefault(SpreadsheetCell cell)
         {
             return cell.Text != null || cell.Value != null || cell.BGColor != 0xFFFFFFFF;
         }
@@ -156,7 +156,7 @@ namespace Spreadsheet_Engine
                 for(int col = 0; col < numCols; col++)
                 {
                     SpreadsheetCell cell = cells[row, col];
-
+                    //create the xml entry for a cell only if necessary
                     if (IsNotDefault(cell))
                     {
                         XmlElement cellElem = doc.CreateElement("Cell");
@@ -199,29 +199,36 @@ namespace Spreadsheet_Engine
             try
             {
                 xmlDocument.Load(filename);
-
-                XmlNodeList cellNodes = xmlDocument.SelectNodes("//Cell");
-                foreach (XmlNode cellNode in cellNodes)
+                if (xmlDocument != null)
                 {
-                    int rowIndex = int.Parse(cellNode.SelectSingleNode("RowIndex").InnerText);
-                    int colIndex = int.Parse(cellNode.SelectSingleNode("ColIndex").InnerText);                  
-                    string value = cellNode.SelectSingleNode("Value").InnerText;
-                    uint bgColor = uint.Parse(cellNode.SelectSingleNode("BGColor").InnerText);                 
-                    cells[rowIndex, colIndex].Value = value;
-                    cells[rowIndex, colIndex].BGColor = bgColor;
-                }
+                    XmlNodeList? cellNodes = xmlDocument.SelectNodes("//Cell");
+                    if (cellNodes != null)
+                    {
+                        foreach (XmlNode cellNode in cellNodes)
+                        {
+                            if (cellNode != null)
+                            {
+                                int rowIndex = int.Parse(cellNode.SelectSingleNode("RowIndex").InnerText);
+                                int colIndex = int.Parse(cellNode.SelectSingleNode("ColIndex").InnerText);
+                                string? value = cellNode.SelectSingleNode("Value").InnerText;
+                                uint bgColor = uint.Parse(cellNode.SelectSingleNode("BGColor").InnerText);
+                                cells[rowIndex, colIndex].Value = value;
+                                cells[rowIndex, colIndex].BGColor = bgColor;
+                            }
+                        }
 
-                foreach (XmlNode cellNode in cellNodes)// need to change text (formula) after giving every cell a value so that way 
-                    //the program doesn't incorrectly throw a no value error
-                {
-                    int rowIndex = int.Parse(cellNode.SelectSingleNode("RowIndex").InnerText);
-                    int colIndex = int.Parse(cellNode.SelectSingleNode("ColIndex").InnerText);
-                    string text = cellNode.SelectSingleNode("Text").InnerText;
-                    cells[rowIndex, colIndex].Text = text;
+                        foreach (XmlNode cellNode in cellNodes)// need to change text (formula) after giving every cell a value so that way 
+                                                               //the program doesn't incorrectly throw a no value error
+                        {
+                            int rowIndex = int.Parse(cellNode.SelectSingleNode("RowIndex").InnerText);
+                            int colIndex = int.Parse(cellNode.SelectSingleNode("ColIndex").InnerText);
+                            string? text = cellNode.SelectSingleNode("Text").InnerText;
+                            cells[rowIndex, colIndex].Text = text;
+                        }
+                    }
                 }
-
             }
-            catch (XmlException ex)
+            catch
             {
                 throw new DataException("Cannot Load XML File.");
             }
@@ -410,11 +417,23 @@ namespace Spreadsheet_Engine
             {
                 if (readyToCompile)
                 {
-                    this.tree = new EvaluationTree(func, expression.Substring(1));
+                    this.tree = new EvaluationTree(func, this, expression.Substring(1));
                     this.tree.VariableChanged += this.TreeValueChanged; // subscribe the cell to it's tree's variable changed event so it can revaluate the tree
-                    if (evaluate)
+
+                    if (this.Value != "!(self reference)")
                     {
-                        this.Value = this.tree.Evaluate().ToString();
+                        if (evaluate)
+                        {
+                            double val = this.tree.Evaluate();
+                            if (val == -1)
+                            {
+                                this.Value = "!(bad reference)";
+                            }
+                            else
+                            {
+                                this.Value = val.ToString();
+                            }
+                        }
                     }
                 }
             }

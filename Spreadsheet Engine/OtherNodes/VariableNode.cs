@@ -27,18 +27,22 @@ namespace Spreadsheet_Engine
         {
             if(variables.TryGetValue(varName, out var cell) == true)
             {
+                if (cell.Value == "!(bad reference)")
+                {
+                    return 0;
+                }
                 if (cell.Value != null)
                 {
                     return double.Parse(cell.Value);
                 }
                 else
                 {
-                    throw new Exception("Variable Doesn't Exist.\n");
+                    return 0;
                 }
             }
             else
             {
-                throw new Exception("Variable Doesn't Exist.\n");
+                return 0;
             }
         }
     }

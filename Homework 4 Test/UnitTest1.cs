@@ -264,5 +264,41 @@ namespace Spreadsheet_Engine
         }
 
 
+        //Homework 10 Tests
+
+        /// <summary>
+        /// Tests Spreadsheet when a bad reference is added
+        /// </summary>
+        [Test]
+        public void Test_BadReference()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            sheet.GetCellAtPos(1, 1).Text = "=A57";
+            Assert.That(sheet.GetCellAtPos(1, 1).Value, Is.EqualTo("!(bad reference)"));
+        }
+
+
+        /// <summary>
+        /// Tests spreadsheet when a self reference is created
+        /// </summary>
+        [Test]
+        public void Test_SelfReference()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            sheet.GetCellAtPos(1, 1).Text = "=A7 + 7 + A1";
+            Assert.That(sheet.GetCellAtPos(1, 1).Value, Is.EqualTo("!(self reference)"));
+        }
+
+
+        /// <summary>
+        /// Tests spreadsheet when a circular reference is added.
+        /// </summary>
+        [Test]
+        public void Test_CircularReference()
+        {
+
+        }
+
+
     }
 }
