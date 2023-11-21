@@ -9,6 +9,7 @@ namespace Spreadsheet_Engine
 {
     using OperatorNodeStuff;
     using System.Threading.Tasks.Sources;
+    using System.Xml;
 
 
     /// <summary>
@@ -126,6 +127,103 @@ namespace Spreadsheet_Engine
             else
             {
                 throw new ArgumentException("Please Provide a Value Greater Than 0.\n");
+            }
+        }
+
+        /// <summary>
+        /// Function to determine if a cell has been changed or not
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        private bool IsNotDefault(SpreadsheetCell cell)
+        {
+            return cell.Text != null || cell.Value != null || cell.BGColor != 0xFFFFFFFF;
+        }
+
+
+        /// <summary>
+        /// saves the spreadsheet in XML format.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void Save(string filename)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement root = doc.CreateElement("Spreadsheet");
+            
+
+            for(int row = 0; row < numRows; row++)
+            {
+                for(int col = 0; col < numCols; col++)
+                {
+                    SpreadsheetCell cell = cells[row, col];
+
+                    if (IsNotDefault(cell))
+                    {
+                        XmlElement cellElem = doc.CreateElement("Cell");
+
+                        XmlElement rowElem = doc.CreateElement("RowIndex");
+                        rowElem.InnerText = cell.RowIndex.ToString();
+                        cellElem.AppendChild(rowElem);
+
+                        XmlElement colElem = doc.CreateElement("ColIndex");
+                        colElem.InnerText = cell.ColIndex.ToString();
+                        cellElem.AppendChild(colElem);
+
+                        XmlElement textElem = doc.CreateElement("Text");
+                        textElem.InnerText = cell.Text ?? "";
+                        cellElem.AppendChild(textElem);
+
+                        XmlElement valueElem = doc.CreateElement("Value");
+                        valueElem.InnerText = cell.Value ?? "";
+                        cellElem.AppendChild(valueElem);
+
+                        XmlElement colorElem = doc.CreateElement("BGColor");
+                        colorElem.InnerText = cell.BGColor.ToString();
+                        cellElem.AppendChild(colorElem);
+
+                        root.AppendChild(cellElem);
+                    }
+                }
+            }
+            doc.AppendChild(root);
+            doc.Save(filename);
+        }
+
+        /// <summary>
+        /// function to load a spreadsheet in XML format
+        /// </summary>
+        /// <param name="filename"></param>
+        public void Load(string filename)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            try
+            {
+                xmlDocument.Load(filename);
+
+                XmlNodeList cellNodes = xmlDocument.SelectNodes("//Cell");
+                foreach (XmlNode cellNode in cellNodes)
+                {
+                    int rowIndex = int.Parse(cellNode.SelectSingleNode("RowIndex").InnerText);
+                    int colIndex = int.Parse(cellNode.SelectSingleNode("ColIndex").InnerText);                  
+                    string value = cellNode.SelectSingleNode("Value").InnerText;
+                    uint bgColor = uint.Parse(cellNode.SelectSingleNode("BGColor").InnerText);                 
+                    cells[rowIndex, colIndex].Value = value;
+                    cells[rowIndex, colIndex].BGColor = bgColor;
+                }
+
+                foreach (XmlNode cellNode in cellNodes)// need to change text (formula) after giving every cell a value so that way 
+                    //the program doesn't incorrectly throw a no value error
+                {
+                    int rowIndex = int.Parse(cellNode.SelectSingleNode("RowIndex").InnerText);
+                    int colIndex = int.Parse(cellNode.SelectSingleNode("ColIndex").InnerText);
+                    string text = cellNode.SelectSingleNode("Text").InnerText;
+                    cells[rowIndex, colIndex].Text = text;
+                }
+
+            }
+            catch (XmlException ex)
+            {
+                throw new DataException("Cannot Load XML File.");
             }
         }
 
@@ -253,7 +351,7 @@ namespace Spreadsheet_Engine
         {
             public EvaluationTree? tree;
             public event PropertyChangedEventHandler ValueChanged = delegate { };
-            private bool evaluate = true;
+            private bool evaluate = true, readyToCompile = true; // for undo/redo, and save/load
 
             /// <summary>
             /// Uses Cell constructor as SpreadsheetCell constructor
@@ -287,6 +385,11 @@ namespace Spreadsheet_Engine
                 evaluate = eval;
             }
 
+            public void SetReady(bool ready)
+            {
+                readyToCompile = ready;
+            }
+
             public void SetText(string? newString)
             {
                 Text = newString;
@@ -305,9 +408,15 @@ namespace Spreadsheet_Engine
             /// <param name="func"></param>
             public void BuildNewTree(string expression, GetCellDelegate func)
             {
-                this.tree = new EvaluationTree(func, expression.Substring(1));
-                this.tree.VariableChanged += this.TreeValueChanged; // subscribe the cell to it's tree's variable changed event so it can revaluate the tree
-                this.Value = this.tree.Evaluate().ToString();
+                if (readyToCompile)
+                {
+                    this.tree = new EvaluationTree(func, expression.Substring(1));
+                    this.tree.VariableChanged += this.TreeValueChanged; // subscribe the cell to it's tree's variable changed event so it can revaluate the tree
+                    if (evaluate)
+                    {
+                        this.Value = this.tree.Evaluate().ToString();
+                    }
+                }
             }
 
 

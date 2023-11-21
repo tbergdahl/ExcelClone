@@ -39,6 +39,8 @@ namespace Spreadsheet_Trenton_Bergdahl
             changeSelectedCellColorToolStripMenuItem = new ToolStripMenuItem();
             undoToolStripMenuItem = new ToolStripMenuItem();
             redoToolStripMenuItem = new ToolStripMenuItem();
+            saveSheetToolStripMenuItem = new ToolStripMenuItem();
+            loadSheetToolStripMenuItem = new ToolStripMenuItem();
             ((ISupportInitialize)dataGridView1).BeginInit();
             menuStrip1.SuspendLayout();
             SuspendLayout();
@@ -69,7 +71,7 @@ namespace Spreadsheet_Trenton_Bergdahl
             // 
             // optionsToolStripMenuItem
             // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { changeSelectedCellColorToolStripMenuItem, undoToolStripMenuItem, redoToolStripMenuItem });
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { changeSelectedCellColorToolStripMenuItem, undoToolStripMenuItem, redoToolStripMenuItem, saveSheetToolStripMenuItem, loadSheetToolStripMenuItem });
             optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             optionsToolStripMenuItem.Size = new Size(75, 24);
             optionsToolStripMenuItem.Text = "Options";
@@ -86,16 +88,30 @@ namespace Spreadsheet_Trenton_Bergdahl
             undoToolStripMenuItem.Name = "undoToolStripMenuItem";
             undoToolStripMenuItem.Size = new Size(272, 26);
             undoToolStripMenuItem.Text = "Undo";
-            undoToolStripMenuItem.Click += UndoToolStripMenuItem_Click;
             undoToolStripMenuItem.Visible = false;
+            undoToolStripMenuItem.Click += UndoToolStripMenuItem_Click;
             // 
             // redoToolStripMenuItem
             // 
             redoToolStripMenuItem.Name = "redoToolStripMenuItem";
             redoToolStripMenuItem.Size = new Size(272, 26);
             redoToolStripMenuItem.Text = "Redo";
-            redoToolStripMenuItem.Click += RedoToolStripMenuItem_Click;
             redoToolStripMenuItem.Visible = false;
+            redoToolStripMenuItem.Click += RedoToolStripMenuItem_Click;
+            // 
+            // saveSheetToolStripMenuItem
+            // 
+            saveSheetToolStripMenuItem.Name = "saveSheetToolStripMenuItem";
+            saveSheetToolStripMenuItem.Size = new Size(272, 26);
+            saveSheetToolStripMenuItem.Text = "Save Sheet";
+            saveSheetToolStripMenuItem.Click += SaveSheetToolStripMenuItem_Click;
+            // 
+            // loadSheetToolStripMenuItem
+            // 
+            loadSheetToolStripMenuItem.Name = "loadSheetToolStripMenuItem";
+            loadSheetToolStripMenuItem.Size = new Size(272, 26);
+            loadSheetToolStripMenuItem.Text = "Load Sheet";
+            loadSheetToolStripMenuItem.Click += LoadSheetToolStripMenuItem_Click;
             // 
             // Form1
             // 
@@ -126,6 +142,8 @@ namespace Spreadsheet_Trenton_Bergdahl
         private ToolStripMenuItem changeSelectedCellColorToolStripMenuItem;
         private ToolStripMenuItem undoToolStripMenuItem;
         private ToolStripMenuItem redoToolStripMenuItem;
+        private ToolStripMenuItem saveSheetToolStripMenuItem;
+        private ToolStripMenuItem loadSheetToolStripMenuItem;
     }
 
 }

@@ -1,0 +1,18 @@
+<Spreadsheet>
+  <Cell>
+    <RowIndex>1</RowIndex>
+    <ColIndex>1</ColIndex>
+    <Text>=9 + 10</Text>
+    <Value>19</Value>
+    <BGColor>4294967295</BGColor>
+  </Cell>
+  <Cell>
+    <RowIndex>4</RowIndex>
+    <ColIndex>2</ColIndex>
+    <Text>
+    </Text>
+    <Value>
+    </Value>
+    <BGColor>5934383</BGColor>
+  </Cell>
+</Spreadsheet>
