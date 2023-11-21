@@ -15,7 +15,7 @@ namespace Spreadsheet_Trenton_Bergdahl
     /// </summary>
     public partial class Form1 : Form
     {
-        private readonly Spreadsheet sheet;
+        private Spreadsheet sheet;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class.
@@ -252,6 +252,54 @@ namespace Spreadsheet_Trenton_Bergdahl
         {
             this.sheet.Redo();
             this.UpdateUndoRedoMenuItemsText();
+        }
+
+        private void SaveSheetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "XML Files (*.xml)|*.xml";
+            saveFileDialog.Title = "Save Spreadsheet";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != string.Empty)
+            {
+                string filePath = saveFileDialog.FileName;
+                this.sheet.Save(filePath);
+            }
+        }
+
+        private void LoadSheetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML Files (*.xml)|*.xml";
+            openFileDialog.Title = "Load Spreadsheet";
+            openFileDialog.ShowDialog();
+
+            if (openFileDialog.FileName != string.Empty)
+            {
+                this.sheet = new Spreadsheet(51, 27);
+                this.sheet.CellPropertyChanged += this.Spreadsheet_PropertyChanged;
+                this.sheet.CellBackgroundColorChanged += this.Spreadsheet_BackgroundColorChanged;
+
+                foreach (DataGridViewRow row in dataGridView1.Rows) // reset view
+                {
+                    foreach (DataGridViewCell cell in row.Cells)
+                    {
+                        cell.Value = null;
+                        cell.Style.BackColor = Color.White;
+                    }
+                }
+
+                string filePath = openFileDialog.FileName;
+                try
+                {
+                    this.sheet.Load(filePath);
+                }
+                catch (DataException ex)
+                {
+                    MessageBox.Show("An Error Occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

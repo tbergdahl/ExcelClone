@@ -1,5 +1,6 @@
 using Spreadsheet_Engine;
 using System.Data;
+using System.IO;
 namespace Spreadsheet_Engine
 {
     
@@ -227,6 +228,40 @@ namespace Spreadsheet_Engine
         }
 
 
+
+
+
+        // Homework 9 Tests
+
+
+        /// <summary>
+        /// Tests that save and load function work as expected.
+        /// </summary>
+        [Test]
+        public void Test_SaveAndLoad()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            sheet.GetCellAtPos(1, 1).Text = "=9 + 10";
+            sheet.GetCellAtPos(4, 2).BGColor = 0x5A8D2F;
+
+            sheet.Save("Homework9Test");
+            sheet = new Spreadsheet(51, 27);
+            sheet.Load("Homework9Test");
+            Assert.That(sheet.GetCellAtPos(1, 1).Text, Is.EqualTo("=9 + 10"));
+            Assert.That(sheet.GetCellAtPos(4, 2).BGColor, Is.EqualTo(0x5A8D2F));
+
+        }
+
+
+        /// <summary>
+        /// Tests load function to ensure it throws exception when there is not a file with the input name found.
+        /// </summary>
+        [Test]
+        public void Test_Load_NonexistingFile()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            Assert.Throws<FileNotFoundException>(() => sheet.Load("Homework9TestNope"));         
+        }
 
 
     }
