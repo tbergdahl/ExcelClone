@@ -417,6 +417,11 @@ namespace Spreadsheet_Engine
             {
                 if (readyToCompile)
                 {
+                    if(tree != null)
+                    {
+                        this.tree.VariableChanged -= this.TreeValueChanged;
+                        this.tree = null;
+                    }
                     this.tree = new EvaluationTree(func, this, expression.Substring(1));
                     this.tree.VariableChanged += this.TreeValueChanged; // subscribe the cell to it's tree's variable changed event so it can revaluate the tree
 
@@ -424,17 +429,25 @@ namespace Spreadsheet_Engine
                     {
                         if (evaluate)
                         {
-                            double val = this.tree.Evaluate();
-                            if (val == -1)
+                            if (!this.tree.TreeHasCircularReference())
                             {
-                                this.Value = "!(bad reference)";
+                                double val = this.tree.Evaluate();
+                                if (val == -1)
+                                {
+                                    this.Value = "!(bad reference)";
+                                }
+                                else
+                                {
+                                    this.Value = val.ToString();
+                                }
                             }
                             else
                             {
-                                this.Value = val.ToString();
+                                this.Value = "!(circular reference)";
                             }
                         }
                     }
+                   
                 }
             }
 

@@ -54,13 +54,10 @@ namespace Spreadsheet_Engine
             {
                 if (sender is Spreadsheet.SpreadsheetCell cell)
                 {
-                    foreach (KeyValuePair<string, Spreadsheet.SpreadsheetCell> variable in variables) // go through variables to find match
+                    if (cell.Value != "!(circular reference)" && cell.Value != "!(bad reference)")
                     {
-                        if (cell == variable.Value)
-                        {
-                            VariableChanged.Invoke(this, new PropertyChangedEventArgs(variable.Key));// notify the cell containing this tree that a varible updated
-                        }
-                    }
+                        VariableChanged.Invoke(this, new PropertyChangedEventArgs("string"));// notify the cell containing this tree that a varible updated
+                    }                     
                 }
             }
 
@@ -124,21 +121,24 @@ namespace Spreadsheet_Engine
                                         {
                                             if (varCell.Value == null || varCell.Value == "!(bad reference)")
                                             {
-                                                parentCell.Text = "!(bad reference)";
-                                                parentCell.SendNotification();
+                                                parentCell.Value = "!(bad reference)";
+                                            }
+                                            else if(varCell.Value == "!(circular reference)")
+                                            {
+                                                parentCell.Value = "!(circular reference)";
                                             }
                                             variables[exp] = varCell;
                                             stack.Push(new VariableNode(exp, variables));
                                         }
                                         else
                                         {
-                                            parentCell.Text = "!(self reference)";
+                                            parentCell.Value = "!(self reference)";
                                             return;
                                         }
                                     }
                                     else
                                     {
-                                        parentCell.Text = "!(bad reference)";
+                                        parentCell.Value = "!(bad reference)";
                                         throwException = false;
                                     }
                                 }
@@ -148,6 +148,8 @@ namespace Spreadsheet_Engine
 
                     }
                 }
+
+       
 
                 if (stack.Count == 1)
                 {
@@ -160,6 +162,40 @@ namespace Spreadsheet_Engine
                 }
             }
 
+
+
+            public bool TreeHasCircularReference()
+            {
+                if(HasCircularReference(parentCell, parentCell))
+                {
+                    return true;
+                }
+                
+                return false;
+            }
+            
+            private bool HasCircularReference(Spreadsheet.SpreadsheetCell original, Spreadsheet.SpreadsheetCell traversalCell)
+            {
+                if(traversalCell.tree == null || traversalCell.tree.variables.Count == 0) // there is no formula that holds other cells
+                {
+                    return false;
+                }
+                else
+                {
+                    if(traversalCell.tree.variables.ContainsValue(original))// contains original cell
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        foreach (KeyValuePair<string, Spreadsheet.SpreadsheetCell> pair in traversalCell.tree.variables)
+                        {
+                            return HasCircularReference(original, pair.Value);
+                        }
+                    }
+                }
+                return false;
+            }
 
             /// <summary>
             /// Splits expression into subexpressions to build nodes

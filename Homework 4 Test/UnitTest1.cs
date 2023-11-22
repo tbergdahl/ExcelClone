@@ -296,9 +296,32 @@ namespace Spreadsheet_Engine
         [Test]
         public void Test_CircularReference()
         {
-
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            sheet.GetCellAtPos(1, 1).Text = "=B2 + 9";
+            sheet.GetCellAtPos(2, 2).Text = "=C3 / 10";
+            sheet.GetCellAtPos(3, 3).Text = "=A1 + 8";
+            Assert.That(sheet.GetCellAtPos(3, 3).Value, Is.EqualTo("!(circular reference)"));
         }
 
+
+        /// <summary>
+        /// Tests whether the cell's formulas are updated when a circular reference is fixed
+        /// </summary>
+        [Test]
+
+        public void Test_CircularReferenceFixed()
+        {
+            Spreadsheet sheet = new Spreadsheet(51, 27);
+            sheet.GetCellAtPos(1, 1).Text = "=B2 + 9";
+            sheet.GetCellAtPos(2, 2).Text = "=C3 / 10";
+            sheet.GetCellAtPos(3, 3).Text = "=A1 + 8";
+            Assert.That(sheet.GetCellAtPos(3, 3).Value, Is.EqualTo("!(circular reference)"));
+            sheet.GetCellAtPos(3, 3).Text = "=12 + 8";
+
+            Assert.That(sheet.GetCellAtPos(1, 1).Value, Is.EqualTo("11"));
+            Assert.That(sheet.GetCellAtPos(2, 2).Value, Is.EqualTo("2"));
+            Assert.That(sheet.GetCellAtPos(3, 3).Value, Is.EqualTo("20"));
+        }
 
     }
 }

@@ -31,6 +31,10 @@ namespace Spreadsheet_Engine
                 {
                     return 0;
                 }
+                else if (cell.Value == "!(circular reference)")
+                {
+                    return 0;
+                }
                 if (cell.Value != null)
                 {
                     return double.Parse(cell.Value);
