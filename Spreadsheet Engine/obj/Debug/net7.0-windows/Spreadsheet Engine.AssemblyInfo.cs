@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Spreadsheet Engine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5a45dbed44bc71e794005b692d9eb60ca0b06f5f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9adf1a55f8055bfc6c65a5e76e2743ffe68699c8")]
 [assembly: System.Reflection.AssemblyProductAttribute("Spreadsheet Engine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Spreadsheet Engine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
