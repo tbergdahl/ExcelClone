@@ -163,10 +163,13 @@ namespace Spreadsheet_Engine
             }
 
 
-
+            /// <summary>
+            /// Checks for circular references within the given cell
+            /// </summary>
+            /// <returns></returns>
             public bool TreeHasCircularReference()
             {
-                if(HasCircularReference(parentCell, parentCell))
+                if(HasCircularReference(parentCell, parentCell))// start at parent cell and recursively check all variables
                 {
                     return true;
                 }
@@ -174,6 +177,12 @@ namespace Spreadsheet_Engine
                 return false;
             }
             
+            /// <summary>
+            /// traverses through the cells referenced by a cell, and every cell they reference, to check for circular references
+            /// </summary>
+            /// <param name="original"></param>
+            /// <param name="traversalCell"></param>
+            /// <returns></returns>
             private bool HasCircularReference(Spreadsheet.SpreadsheetCell original, Spreadsheet.SpreadsheetCell traversalCell)
             {
                 if(traversalCell.tree == null || traversalCell.tree.variables.Count == 0) // there is no formula that holds other cells

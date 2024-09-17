@@ -419,7 +419,8 @@ namespace Spreadsheet_Engine
                 {
                     if(tree != null)
                     {
-                        this.tree.VariableChanged -= this.TreeValueChanged;
+                        this.tree.VariableChanged -= this.TreeValueChanged; // this is to prevent old tree objects from 
+                        //messing with the updates of the cells that would be fixed when a circular reference is fixed
                         this.tree = null;
                     }
                     this.tree = new EvaluationTree(func, this, expression.Substring(1));
@@ -434,16 +435,16 @@ namespace Spreadsheet_Engine
                                 double val = this.tree.Evaluate();
                                 if (val == -1)
                                 {
-                                    this.Value = "!(bad reference)";
+                                    this.Value = "!(bad reference)"; // bad reference update
                                 }
                                 else
                                 {
-                                    this.Value = val.ToString();
+                                    this.Value = val.ToString(); // update worked
                                 }
                             }
                             else
                             {
-                                this.Value = "!(circular reference)";
+                                this.Value = "!(circular reference)"; // circular reference update
                             }
                         }
                     }

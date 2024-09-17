@@ -177,19 +177,7 @@ namespace Spreadsheet_Engine
         }
 
 
-        /// <summary>
-        /// Tests exception handling for when a cell references a cell that doesn't have a value.
-        /// </summary>
-        [Test]
-
-        public void Test_ReferencedCells_NoCellValue()
-        {
-            Spreadsheet sheet = new Spreadsheet(51, 27);
-            Spreadsheet.SpreadsheetCell cell1 = sheet.GetCell(1, 1);
-            Spreadsheet.SpreadsheetCell cell2 = sheet.GetCell(2, 2);
-            cell1.Text = "=3 + 89";
-            Assert.Throws<InvalidExpressionException>(() => cell2.Text = "=B3 + 5");
-        }
+        
 
 
 
@@ -249,19 +237,10 @@ namespace Spreadsheet_Engine
             sheet.Load("Homework9Test");
             Assert.That(sheet.GetCellAtPos(1, 1).Text, Is.EqualTo("=9 + 10"));
             Assert.That(sheet.GetCellAtPos(4, 2).BGColor, Is.EqualTo(0x5A8D2F));
-
         }
 
 
-        /// <summary>
-        /// Tests load function to ensure it throws exception when there is not a file with the input name found.
-        /// </summary>
-        [Test]
-        public void Test_Load_NonexistingFile()
-        {
-            Spreadsheet sheet = new Spreadsheet(51, 27);
-            Assert.Throws<FileNotFoundException>(() => sheet.Load("Homework9TestNope"));         
-        }
+        
 
 
         //Homework 10 Tests

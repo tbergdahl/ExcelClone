@@ -9,3 +9,5 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Homework_4_Test
 build_property.ProjectDir = C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Homework 4 Test\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

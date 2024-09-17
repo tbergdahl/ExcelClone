@@ -1,8 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "4Ackel+myPZCr1S0yPb8fjqPWu1vcfg7Cs0kP0YPaqOPgV8dpc/urSJEeySrdyRGsgGFYdvCZZe3aUbELqxzkg==",
+  "dgSpecHash": "7PRPrJiU7ylr0XkFOJZGsaoBXL6h+ybpdrqU92Wv019CBUpkZElV9NgAikdHh/NmRCzOavjfIQ5F3Gy0l8yMow==",
   "success": true,
   "projectFilePath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 3\\Homework 3.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.18\\microsoft.windowsdesktop.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.18\\microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.18\\microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.18\\microsoft.netcore.app.host.win-x64.7.0.18.nupkg.sha512"
+  ],
   "logs": []
 }

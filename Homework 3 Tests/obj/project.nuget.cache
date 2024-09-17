@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oj5xQ45VAwtGOL0DgZOkaaKDLV8jkY+94jHYQ74Zyg8b63arZkFUNNAtAeAKPqCEjzcdJ22maHrA9Zp1Z9x3hg==",
+  "dgSpecHash": "g27KEUYFfYWVcKvtQNgOB2CAcqWmm8YsmERq/NA9dGhFW+pWa08Shh/1OuUGy4rbwI6LtMgJb9TLaYiMYIdEzA==",
   "success": true,
   "projectFilePath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\Homework 3 Tests\\Homework 3 Tests.csproj",
   "expectedPackageFiles": [
@@ -16,7 +16,11 @@
     "C:\\Users\\trent\\.nuget\\packages\\nunit\\3.13.3\\nunit.3.13.3.nupkg.sha512",
     "C:\\Users\\trent\\.nuget\\packages\\nunit.analyzers\\3.6.1\\nunit.analyzers.3.6.1.nupkg.sha512",
     "C:\\Users\\trent\\.nuget\\packages\\nunit3testadapter\\4.4.2\\nunit3testadapter.4.4.2.nupkg.sha512",
-    "C:\\Users\\trent\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512"
+    "C:\\Users\\trent\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.18\\microsoft.windowsdesktop.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.18\\microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.18\\microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.18\\microsoft.netcore.app.host.win-x64.7.0.18.nupkg.sha512"
   ],
   "logs": []
 }

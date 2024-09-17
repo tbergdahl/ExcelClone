@@ -281,7 +281,7 @@ namespace Spreadsheet_Trenton_Bergdahl
                 this.sheet.CellPropertyChanged += this.Spreadsheet_PropertyChanged;
                 this.sheet.CellBackgroundColorChanged += this.Spreadsheet_BackgroundColorChanged;
 
-                foreach (DataGridViewRow row in dataGridView1.Rows) // reset view
+                foreach (DataGridViewRow row in this.dataGridView1.Rows) // reset view
                 {
                     foreach (DataGridViewCell cell in row.Cells)
                     {

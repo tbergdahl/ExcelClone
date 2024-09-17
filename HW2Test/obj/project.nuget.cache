@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "lrIk8Fdn/4qTj7APIyVMZCyQf20co3dWk+48LBn3zdZPEkfAtQ+BuzH/shS/bUZ8xxtun44KFaY0rPaWqtfPpw==",
+  "dgSpecHash": "udjeNPEgeicos7ni4ZUVqNTt27iiwH3FML/vgRlvsxnfOBDymXTdbZHdtAlfacCjghY76NKlytaBH7iixWtpKA==",
   "success": true,
   "projectFilePath": "C:\\Users\\trent\\Documents\\Fall 2023\\CPTS 321\\Homework\\HW2Test\\HW2Test.csproj",
   "expectedPackageFiles": [
@@ -16,7 +16,10 @@
     "C:\\Users\\trent\\.nuget\\packages\\nunit\\3.13.3\\nunit.3.13.3.nupkg.sha512",
     "C:\\Users\\trent\\.nuget\\packages\\nunit.analyzers\\3.6.1\\nunit.analyzers.3.6.1.nupkg.sha512",
     "C:\\Users\\trent\\.nuget\\packages\\nunit3testadapter\\4.4.2\\nunit3testadapter.4.4.2.nupkg.sha512",
-    "C:\\Users\\trent\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512"
+    "C:\\Users\\trent\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.18\\microsoft.windowsdesktop.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.18\\microsoft.netcore.app.ref.7.0.18.nupkg.sha512",
+    "C:\\Users\\trent\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.18\\microsoft.aspnetcore.app.ref.7.0.18.nupkg.sha512"
   ],
   "logs": []
 }
