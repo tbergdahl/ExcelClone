@@ -9,3 +9,4 @@ C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Debu
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Debug\net7.0-windows\refint\Spreadsheet Engine.dll
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Debug\net7.0-windows\Spreadsheet Engine.pdb
 C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Debug\net7.0-windows\ref\Spreadsheet Engine.dll
+C:\Users\trent\Documents\Fall 2023\CPTS 321\Homework\Spreadsheet Engine\obj\Debug\net7.0-windows\Spreadsheet Engine.sourcelink.json
